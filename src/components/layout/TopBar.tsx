@@ -27,7 +27,7 @@ export const TopBar: React.FC = () => {
   const currentLangObj = languages.find(l => l.code === language) || languages[0];
 
   return (
-    <div className="bg-[#F2F4F7] border-b border-gray-200 text-xs text-gray-600 py-1.5 hidden sm:block">
+    <div className="bg-[#F2F4F7] border-b border-gray-200 text-xs text-gray-600 py-1.5 hidden sm:block relative z-40">
       <div className="max-w-[1280px] mx-auto px-4 flex items-center justify-between">
         {/* Left */}
         <div className="flex items-center gap-3">
@@ -61,7 +61,7 @@ export const TopBar: React.FC = () => {
           <div className="w-px h-3.5 bg-gray-300"></div>
 
           {/* Multi-Language Switcher Dropdown */}
-          <div className="relative" ref={langRef}>
+          <div className="relative z-50" ref={langRef}>
             <button 
               className="flex items-center gap-1.5 font-semibold text-gray-700 hover:text-uzum-purple transition-colors px-2.5 py-1 rounded-lg hover:bg-gray-200/60 border border-transparent hover:border-gray-300/60"
               onClick={() => setIsLangDropdownOpen(prev => !prev)}
