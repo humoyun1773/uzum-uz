@@ -4,6 +4,7 @@
   --color-uzum-purple: #7000FF;
   --color-uzum-purple-hover: #5C00D2;
   --color-uzum-purple-light: #F3E8FF;
+  --color-uzum-purple-badge: #EFE4FF;
   --color-uzum-yellow: #FFD800;
   --color-uzum-yellow-hover: #E6C200;
   --color-uzum-red: #F93C00;
@@ -23,7 +24,34 @@
   }
 }
 
-/* Custom animations */
+/* Custom glow shadows & glassmorphism */
+.shadow-uzum {
+  box-shadow: 0 4px 20px rgba(112, 0, 255, 0.08);
+}
+
+.shadow-uzum-lg {
+  box-shadow: 0 12px 32px rgba(112, 0, 255, 0.16);
+}
+
+.shadow-card-hover {
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.09);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.gradient-uzum-btn {
+  background: linear-gradient(135deg, #7000FF 0%, #5C00D2 100%);
+}
+
+.gradient-uzum-btn:hover {
+  background: linear-gradient(135deg, #5C00D2 0%, #4D00B3 100%);
+}
+
+/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
@@ -42,61 +70,32 @@
   animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* ==========================================================================
-   EXPLICIT CUSTOM RESPONSIVE MEDIA QUERIES
-   ========================================================================== */
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
 
-/* Mobile Phones (up to 640px) */
+::-webkit-scrollbar-track {
+  background: #F1F1F1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C4C8D0;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7000FF;
+}
+
+/* Mobile Media Query Adjustments */
 @media screen and (max-width: 640px) {
-  .container {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-  }
-
-  /* Compact typography on small screens */
-  h1 {
-    font-size: 1.25rem !important;
-    line-height: 1.3 !important;
-  }
-
-  h2 {
-    font-size: 1.1rem !important;
-    line-height: 1.3 !important;
-  }
-
-  /* Full screen touch modals on mobile */
   .modal-overlay > div {
     width: 100% !important;
     max-width: 100% !important;
-    border-radius: 1rem 1rem 0 0 !important;
+    border-radius: 1.25rem 1.25rem 0 0 !important;
     margin-top: auto !important;
     max-height: 92vh !important;
-  }
-
-  /* Touch friendly scrollbars */
-  ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
-  }
-}
-
-/* Tablets (641px to 1024px) */
-@media screen and (min-width: 641px) and (max-width: 1024px) {
-  .container {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
-
-  .modal-overlay > div {
-    max-width: 90% !important;
-  }
-}
-
-/* Large Screens (1025px and up) */
-@media screen and (min-width: 1025px) {
-  .container {
-    max-width: 1280px;
-    margin-left: auto;
-    margin-right: auto;
   }
 }

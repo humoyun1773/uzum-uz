@@ -25,42 +25,42 @@ export const HeroSlider: React.FC = () => {
   const activeBanner = BANNERS[currentIndex];
 
   return (
-    <div className="relative rounded-2xl overflow-hidden my-5 mb-8 shadow-md">
+    <div className="relative rounded-3xl overflow-hidden my-5 mb-8 shadow-xl shadow-uzum-purple/10 border border-gray-100">
       <div 
-        className="flex flex-col md:flex-row items-center justify-between min-h-[340px] p-6 md:p-14 text-white relative animate-fade"
+        className="flex flex-col md:flex-row items-center justify-between min-h-[360px] p-6 md:p-14 text-white relative animate-fade"
         style={{ background: activeBanner.bgColor }}
       >
-        <div className="max-w-[550px] z-10 text-center md:text-left">
-          <span className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-semibold mb-4">
-            <ShieldCheck size={14} />
+        <div className="max-w-[560px] z-10 text-center md:text-left">
+          <span className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-md border border-white/30 px-4 py-1.5 rounded-full text-xs font-bold mb-4 shadow-xs">
+            <ShieldCheck size={16} className="text-amber-300" />
             {activeBanner.badge}
           </span>
-          <h1 className="text-2xl md:text-4xl font-extrabold leading-tight mb-3 tracking-tight">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-extrabold leading-tight mb-3.5 tracking-tight text-shadow">
             {activeBanner.title}
           </h1>
-          <p className="text-sm md:text-base opacity-95 mb-6">
+          <p className="text-sm md:text-base opacity-95 mb-7 font-normal">
             {activeBanner.subtitle}
           </p>
           
-          <button className="bg-uzum-yellow text-uzum-dark font-bold text-sm md:text-base px-8 py-3.5 rounded-lg hover:bg-uzum-yellow-hover hover:-translate-y-0.5 transition-all shadow-md">
+          <button className="bg-uzum-yellow text-uzum-dark font-extrabold text-sm md:text-base px-8 py-3.5 rounded-xl hover:bg-uzum-yellow-hover hover:-translate-y-0.5 active:translate-y-0 transition-all shadow-lg shadow-amber-400/25">
             {t('banner.see_more')}
           </button>
         </div>
 
-        <div className="hidden md:block w-[380px] h-[280px] rounded-xl overflow-hidden shadow-2xl">
+        <div className="hidden md:block w-[400px] h-[290px] rounded-2xl overflow-hidden shadow-2xl border-2 border-white/20">
           <img src={activeBanner.image} alt={activeBanner.title} className="w-full h-full object-cover" />
         </div>
       </div>
 
-      {/* Arrows */}
+      {/* Arrow Controls */}
       <button 
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 text-uzum-dark flex items-center justify-center shadow-lg hover:bg-white hover:text-uzum-purple hover:scale-110 transition-all z-20"
+        className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 text-uzum-dark flex items-center justify-center shadow-xl hover:bg-white hover:text-uzum-purple hover:scale-110 active:scale-95 transition-all z-20"
         onClick={handlePrev}
       >
         <ChevronLeft size={24} />
       </button>
       <button 
-        className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 text-uzum-dark flex items-center justify-center shadow-lg hover:bg-white hover:text-uzum-purple hover:scale-110 transition-all z-20"
+        className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 text-uzum-dark flex items-center justify-center shadow-xl hover:bg-white hover:text-uzum-purple hover:scale-110 active:scale-95 transition-all z-20"
         onClick={handleNext}
       >
         <ChevronRight size={24} />
@@ -72,7 +72,7 @@ export const HeroSlider: React.FC = () => {
           <button
             key={idx}
             className={`h-2.5 rounded-full transition-all ${
-              idx === currentIndex ? 'w-7 bg-white' : 'w-2.5 bg-white/50'
+              idx === currentIndex ? 'w-8 bg-white' : 'w-2.5 bg-white/50 hover:bg-white/80'
             }`}
             onClick={() => setCurrentIndex(idx)}
           />
