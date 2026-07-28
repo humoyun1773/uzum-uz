@@ -58,11 +58,11 @@ export const Navbar: React.FC = () => {
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50 py-2.5 shadow-xs">
-      <div className="max-w-[1280px] mx-auto px-4 flex flex-col md:flex-row items-stretch md:items-center gap-2.5 md:gap-6">
+      <div className="max-w-[1280px] mx-auto px-4 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 md:gap-6">
         
-        {/* Row 1 for Mobile / Left Section for Desktop */}
-        <div className="flex items-center justify-between gap-3">
-          {/* Official Uzum Logo */}
+        {/* LEFT: Logo & Catalog Button */}
+        <div className="flex items-center justify-between md:justify-start gap-3 shrink-0">
+          {/* Logo */}
           <a 
             href="#" 
             className="group shrink-0 transition-transform active:scale-95"
@@ -84,61 +84,41 @@ export const Navbar: React.FC = () => {
             <span>{t('navbar.catalog')}</span>
           </button>
 
-          {/* Desktop Header Action Icons */}
-          <div className="hidden md:flex items-center gap-5">
-            {/* User Auth */}
+          {/* Mobile Actions Header (User, Wishlist, Cart) */}
+          <div className="flex md:hidden items-center gap-4">
             <button
-              className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-uzum-purple transition-colors"
+              className="text-gray-600 hover:text-uzum-purple"
               onClick={() => setIsAuthOpen(true)}
             >
-              <User size={22} />
-              <span className="text-xs font-medium">
-                {user ? user.name : t('navbar.login')}
-              </span>
+              <User size={20} />
             </button>
-
-            {/* Wishlist */}
             <button 
-              className={`flex flex-col items-center gap-0.5 transition-colors ${
-                currentView === 'wishlist' ? 'text-uzum-purple font-semibold' : 'text-gray-600 hover:text-uzum-purple'
-              }`}
+              className="text-gray-600 hover:text-uzum-purple relative"
               onClick={() => setCurrentView('wishlist')}
             >
-              <div className="relative">
-                <Heart size={22} fill={currentView === 'wishlist' ? '#7000FF' : 'none'} />
-                {wishlist.length > 0 && (
-                  <span className="absolute -top-1.5 -right-2 bg-uzum-red text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                    {wishlist.length}
-                  </span>
-                )}
-              </div>
-              <span className="text-xs font-medium">{t('navbar.wishlist')}</span>
+              <Heart size={20} fill={currentView === 'wishlist' ? '#7000FF' : 'none'} />
+              {wishlist.length > 0 && (
+                <span className="absolute -top-1.5 -right-2 bg-uzum-red text-white text-[9px] font-bold rounded-full w-3.5 h-3.5 flex items-center justify-center">
+                  {wishlist.length}
+                </span>
+              )}
             </button>
-
-            {/* Cart Opener */}
             <button
-              className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-uzum-purple transition-colors"
+              className="text-gray-600 hover:text-uzum-purple relative"
               onClick={() => setIsCartOpen(true)}
             >
-              <div className="relative">
-                <ShoppingBag size={22} />
-                {cartTotalCount > 0 && (
-                  <span className="absolute -top-1.5 -right-2 bg-uzum-purple text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                    {cartTotalCount}
-                  </span>
-                )}
-              </div>
-              <span className="text-xs font-medium">
-                {cartDiscountedTotal > 0
-                  ? `${cartDiscountedTotal.toLocaleString('uz-UZ')} so'm`
-                  : t('navbar.cart')}
-              </span>
+              <ShoppingBag size={20} />
+              {cartTotalCount > 0 && (
+                <span className="absolute -top-1.5 -right-2 bg-uzum-purple text-white text-[9px] font-bold rounded-full w-3.5 h-3.5 flex items-center justify-center">
+                  {cartTotalCount}
+                </span>
+              )}
             </button>
           </div>
         </div>
 
-        {/* Row 2 for Mobile / Middle Search Section for Desktop */}
-        <div className="flex-1 flex items-center gap-2 relative" ref={searchRef}>
+        {/* CENTER: Search Bar (Centered on Desktop) */}
+        <div className="flex-1 max-w-2xl mx-auto w-full flex items-center gap-2 relative" ref={searchRef}>
           {/* Mobile Catalog Trigger Button */}
           <button
             className={`md:hidden inline-flex items-center justify-center p-2.5 rounded-lg text-sm font-semibold transition-all shrink-0 ${
@@ -162,7 +142,7 @@ export const Navbar: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setIsSearchFocused(true)}
-              className="flex-1 px-3 py-2 text-xs md:text-sm text-uzum-dark outline-none bg-transparent"
+              className="flex-1 px-3.5 py-2 text-xs md:text-sm text-uzum-dark outline-none bg-transparent"
             />
             {searchQuery && (
               <button 
@@ -173,7 +153,7 @@ export const Navbar: React.FC = () => {
               </button>
             )}
             <button 
-              className="bg-uzum-purple-light text-uzum-purple hover:bg-uzum-purple hover:text-white px-3 md:px-4 py-2 md:py-2.5 transition-colors shrink-0" 
+              className="bg-uzum-purple-light text-uzum-purple hover:bg-uzum-purple hover:text-white px-3.5 md:px-5 py-2 md:py-2.5 transition-colors shrink-0" 
               aria-label="Qidirish"
             >
               <Search size={18} />
@@ -201,6 +181,58 @@ export const Navbar: React.FC = () => {
               ))}
             </div>
           )}
+        </div>
+
+        {/* RIGHT: Action Icons (Desktop Only - User, Wishlist, Cart) */}
+        <div className="hidden md:flex items-center gap-6 shrink-0">
+          {/* User Auth */}
+          <button
+            className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-uzum-purple transition-colors"
+            onClick={() => setIsAuthOpen(true)}
+          >
+            <User size={22} />
+            <span className="text-xs font-medium">
+              {user ? user.name : t('navbar.login')}
+            </span>
+          </button>
+
+          {/* Wishlist */}
+          <button 
+            className={`flex flex-col items-center gap-0.5 transition-colors ${
+              currentView === 'wishlist' ? 'text-uzum-purple font-semibold' : 'text-gray-600 hover:text-uzum-purple'
+            }`}
+            onClick={() => setCurrentView('wishlist')}
+          >
+            <div className="relative">
+              <Heart size={22} fill={currentView === 'wishlist' ? '#7000FF' : 'none'} />
+              {wishlist.length > 0 && (
+                <span className="absolute -top-1.5 -right-2 bg-uzum-red text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                  {wishlist.length}
+                </span>
+              )}
+            </div>
+            <span className="text-xs font-medium">{t('navbar.wishlist')}</span>
+          </button>
+
+          {/* Cart Opener */}
+          <button
+            className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-uzum-purple transition-colors"
+            onClick={() => setIsCartOpen(true)}
+          >
+            <div className="relative">
+              <ShoppingBag size={22} />
+              {cartTotalCount > 0 && (
+                <span className="absolute -top-1.5 -right-2 bg-uzum-purple text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                  {cartTotalCount}
+                </span>
+              )}
+            </div>
+            <span className="text-xs font-medium">
+              {cartDiscountedTotal > 0
+                ? `${cartDiscountedTotal.toLocaleString('uz-UZ')} so'm`
+                : t('navbar.cart')}
+            </span>
+          </button>
         </div>
 
       </div>
