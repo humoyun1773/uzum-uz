@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --color-uzum-purple: #7000FF;
+  --color-uzum-purple-hover: #5C00D2;
+  --color-uzum-purple-light: #F3E8FF;
+  --color-uzum-yellow: #FFD800;
+  --color-uzum-yellow-hover: #E6C200;
+  --color-uzum-red: #F93C00;
+  --color-uzum-green: #00B956;
+  --color-uzum-gray: #F4F5F7;
+  --color-uzum-dark: #1F242F;
+  
+  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-inter);
+    background-color: var(--color-uzum-gray);
+    color: var(--color-uzum-dark);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.animate-fade {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide {
+  animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

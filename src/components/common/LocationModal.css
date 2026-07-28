@@ -1,0 +1,79 @@
+.location-modal-card {
+  background-color: #FFFFFF;
+  border-radius: var(--uzum-radius-lg);
+  width: 500px;
+  max-width: 90%;
+  padding: 32px;
+  position: relative;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+}
+
+.location-modal-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.pin-icon {
+  color: var(--uzum-purple);
+  margin-bottom: 8px;
+}
+
+.location-modal-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1F242F;
+  margin-bottom: 6px;
+}
+
+.location-modal-header p {
+  font-size: 13px;
+  color: #6B7280;
+}
+
+.cities-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.city-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-radius: var(--uzum-radius-sm);
+  border: 1px solid #E5E7EB;
+  background-color: #F9FAFB;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.city-btn:hover {
+  border-color: var(--uzum-purple);
+  background-color: var(--uzum-purple-light);
+}
+
+.city-btn.active {
+  border-color: var(--uzum-purple);
+  background-color: var(--uzum-purple-light);
+}
+
+.city-btn-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.city-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1F242F;
+}
+
+.city-delivery {
+  font-size: 11px;
+  color: #6B7280;
+}
+
+.city-check-icon {
+  color: var(--uzum-purple);
+}

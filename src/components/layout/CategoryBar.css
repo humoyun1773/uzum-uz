@@ -1,0 +1,65 @@
+.category-bar {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #E5E7EB;
+  padding: 8px 0;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.category-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.category-container::-webkit-scrollbar {
+  display: none;
+}
+
+.category-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--uzum-radius-sm);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #4B5563;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.category-item:hover {
+  background-color: #F3F4F6;
+  color: var(--uzum-purple);
+}
+
+.category-item.active {
+  background-color: var(--uzum-purple-light);
+  color: var(--uzum-purple);
+  font-weight: 600;
+}
+
+.category-item.hot {
+  color: var(--uzum-red);
+  font-weight: 600;
+}
+
+.category-item.hot:hover {
+  background-color: #FEE2E2;
+}
+
+.category-item.hot.active {
+  background-color: var(--uzum-red);
+  color: #FFFFFF;
+}
+
+.category-item.hot.active .flame-icon {
+  color: #FFFFFF;
+}
+
+.flame-icon {
+  color: var(--uzum-red);
+}
