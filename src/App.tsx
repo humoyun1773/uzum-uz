@@ -4,6 +4,7 @@ import { TopBar } from './components/layout/TopBar';
 import { Navbar } from './components/layout/Navbar';
 import { CategoryBar } from './components/layout/CategoryBar';
 import { CatalogMegaMenu } from './components/catalog/CatalogMegaMenu';
+import { MobileNav } from './components/layout/MobileNav';
 import { HomePage } from './pages/HomePage';
 import { WishlistPage } from './pages/WishlistPage';
 import { CheckoutPage } from './pages/CheckoutPage';
@@ -17,7 +18,7 @@ const AppContent: React.FC = () => {
   const { currentView } = useShop();
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-uzum-gray">
+    <div className="min-h-screen flex flex-col justify-between bg-uzum-gray pb-16 md:pb-0">
       <div>
         {/* Header Stack */}
         <TopBar />
@@ -40,6 +41,9 @@ const AppContent: React.FC = () => {
         <AuthModal />
         <LocationModal />
       </div>
+
+      {/* Mobile Bottom Navigation Bar (Smartphones only) */}
+      <MobileNav />
 
       {/* Footer */}
       <Footer />
