@@ -1,6 +1,7 @@
 import React from 'react';
 import { useShop } from '../../context/ShopContext';
-import { Sparkles, QrCode, ShieldCheck } from 'lucide-react';
+import { QrCode, ShieldCheck } from 'lucide-react';
+import { UzumLogo } from '../common/UzumLogo';
 
 export const Footer: React.FC = () => {
   const { t } = useShop();
@@ -61,12 +62,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom */}
         <div className="flex flex-col sm:flex-row items-center justify-between pt-6 text-xs text-gray-400 gap-3 text-center sm:text-left">
-          <div className="flex items-center gap-2 font-extrabold text-uzum-purple text-base">
-            <div className="w-7 h-7 rounded-md bg-uzum-purple flex items-center justify-center">
-              <Sparkles size={16} className="text-white" />
-            </div>
-            <span>uzum market</span>
-          </div>
+          <UzumLogo size="sm" />
 
           <p>{t('footer.copyright')}</p>
 

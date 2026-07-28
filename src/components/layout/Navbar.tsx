@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, LayoutGrid, Heart, ShoppingBag, User, X, Sparkles } from 'lucide-react';
+import { Search, LayoutGrid, Heart, ShoppingBag, User, X } from 'lucide-react';
 import { useShop } from '../../context/ShopContext';
+import { UzumLogo } from '../common/UzumLogo';
 
 export const Navbar: React.FC = () => {
   const {
@@ -61,19 +62,13 @@ export const Navbar: React.FC = () => {
         
         {/* Row 1 for Mobile / Left Section for Desktop */}
         <div className="flex items-center justify-between gap-3">
-          {/* Brand Logo */}
+          {/* Official Uzum Logo */}
           <a 
             href="#" 
-            className="flex items-center gap-2 group shrink-0"
+            className="group shrink-0 transition-transform active:scale-95"
             onClick={handleLogoClick}
           >
-            <div className="w-9 h-9 md:w-10 md:h-10 bg-gradient-to-br from-uzum-purple to-[#5C00D2] rounded-xl flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-              <Sparkles size={20} className="text-white" />
-            </div>
-            <div className="flex flex-col leading-none">
-              <span className="text-xl md:text-2xl font-extrabold text-uzum-purple tracking-tight">uzum</span>
-              <span className="text-[10px] md:text-xs font-semibold text-uzum-dark -mt-0.5">market</span>
-            </div>
+            <UzumLogo size="md" />
           </a>
 
           {/* Desktop Catalog Button */}
@@ -89,7 +84,7 @@ export const Navbar: React.FC = () => {
             <span>{t('navbar.catalog')}</span>
           </button>
 
-          {/* Desktop Header Action Icons (Hidden on Mobile, handled by MobileNav) */}
+          {/* Desktop Header Action Icons */}
           <div className="hidden md:flex items-center gap-5">
             {/* User Auth */}
             <button
