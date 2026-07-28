@@ -11,30 +11,34 @@ interface ShopContextType {
   cart: CartItem[];
   wishlist: number[];
   selectedCity: City;
-  searchQuery: string;
+  user: User | null;
+  selectedProduct: Product | null;
   selectedCategory: string | null;
-  currentView: ViewType;
-  language: Language;
-  
-  // Modals & Panels
+  searchQuery: string;
   isCatalogOpen: boolean;
   isCartOpen: boolean;
   isAuthOpen: boolean;
   isLocationOpen: boolean;
-  selectedProduct: Product | null;
-  
-  // User auth state
-  user: User | null;
-  
-  // Promo code
-  promoCode: string;
+  currentView: ViewType;
+  promoCode: string | null;
   promoDiscount: number;
-  promoError: string;
+  promoError: string | null;
+  language: Language;
 
-  // Actions & Translations
-  t: (key: string) => string;
+  // Actions
+  setSelectedCity: (city: City) => void;
+  setSelectedProduct: (product: Product | null) => void;
+  setSelectedCategory: (category: string | null) => void;
+  setSearchQuery: (query: string) => void;
+  setIsCatalogOpen: (isOpen: boolean | ((prev: boolean) => boolean)) => void;
+  setIsCartOpen: (isOpen: boolean | ((prev: boolean) => boolean)) => void;
+  setIsAuthOpen: (isOpen: boolean | ((prev: boolean) => boolean)) => void;
+  setIsLocationOpen: (isOpen: boolean | ((prev: boolean) => boolean)) => void;
+  setCurrentView: (view: ViewType) => void;
   setLanguage: (lang: Language) => void;
-  addToCart: (product: Product, selectedColor?: string, selectedSize?: string, selectedStorage?: string) => void;
+  t: (key: string) => string;
+
+  addToCart: (product: Product, color?: string, size?: string, storage?: string) => void;
   removeFromCart: (productId: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
@@ -42,22 +46,11 @@ interface ShopContextType {
   clearWishlist: () => void;
   addAllWishlistToCart: () => void;
   isWishlisted: (productId: number) => boolean;
-  
-  setSelectedCity: (city: City) => void;
-  setSearchQuery: (query: string) => void;
-  setSelectedCategory: (category: string | null) => void;
-  setCurrentView: (view: ViewType) => void;
-  
-  setIsCatalogOpen: (isOpen: boolean | ((prev: boolean) => boolean)) => void;
-  setIsCartOpen: (isOpen: boolean) => void;
-  setIsAuthOpen: (isOpen: boolean) => void;
-  setIsLocationOpen: (isOpen: boolean) => void;
-  setSelectedProduct: (product: Product | null) => void;
-  
-  applyPromoCode: (code: string) => boolean;
-  loginUser: (phone: string, name?: string) => void;
+  applyPromoCode: (code: string) => void;
+  loginUser: (phone: string, name: string) => void;
   logoutUser: () => void;
-  
+
+  // Computed
   cartTotalCount: number;
   cartSubtotal: number;
   cartDiscountedTotal: number;
@@ -73,35 +66,31 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
   const [wishlist, setWishlist] = useState<number[]>(() => {
     const saved = localStorage.getItem('uzum_wishlist');
-    return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : [101, 103];
   });
   const [selectedCity, setSelectedCity] = useState<City>(CITIES[0]);
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [user, setUser] = useState<User | null>(() => {
+    const saved = localStorage.getItem('uzum_user');
+    return saved ? JSON.parse(saved) : null;
+  });
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isCatalogOpen, setIsCatalogOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [currentView, setCurrentView] = useState<ViewType>('home');
   const [language, setLanguageState] = useState<Language>(() => {
     const saved = localStorage.getItem('uzum_lang');
     return (saved as Language) || 'uz';
   });
 
-  // Modals state
-  const [isCatalogOpen, setIsCatalogOpen] = useState<boolean>(false);
-  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
-  const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
-  const [isLocationOpen, setIsLocationOpen] = useState<boolean>(false);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-
-  // User state
-  const [user, setUser] = useState<User | null>(() => {
-    const saved = localStorage.getItem('uzum_user');
-    return saved ? JSON.parse(saved) : null;
-  });
-
-  // Promo code
-  const [promoCode, setPromoCode] = useState<string>('');
+  const [promoCode, setPromoCode] = useState<string | null>(null);
   const [promoDiscount, setPromoDiscount] = useState<number>(0);
-  const [promoError, setPromoError] = useState<string>('');
+  const [promoError, setPromoError] = useState<string | null>(null);
 
+  // Sync localStorage
   useEffect(() => {
     localStorage.setItem('uzum_cart', JSON.stringify(cart));
   }, [cart]);
@@ -111,10 +100,6 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [wishlist]);
 
   useEffect(() => {
-    localStorage.setItem('uzum_lang', language);
-  }, [language]);
-
-  useEffect(() => {
     if (user) {
       localStorage.setItem('uzum_user', JSON.stringify(user));
     } else {
@@ -122,44 +107,50 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [user]);
 
+  // Lock background scroll when any modal or drawer is open
+  useEffect(() => {
+    const isModalOpen = Boolean(
+      selectedProduct || isCatalogOpen || isCartOpen || isAuthOpen || isLocationOpen
+    );
+
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = '0px';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    };
+  }, [selectedProduct, isCatalogOpen, isCartOpen, isAuthOpen, isLocationOpen]);
+
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
+    localStorage.setItem('uzum_lang', lang);
   };
 
   const t = (key: string): string => {
-    return TRANSLATIONS[language]?.[key] || TRANSLATIONS['uz']?.[key] || key;
+    const langDict = TRANSLATIONS[language] || TRANSLATIONS['uz'];
+    return langDict[key] || TRANSLATIONS['uz'][key] || key;
   };
 
-  const addToCart = (product: Product, selectedColor?: string, selectedSize?: string, selectedStorage?: string) => {
-    setCart((prevCart) => {
-      const existingIndex = prevCart.findIndex(
-        (item) => item.product.id === product.id &&
-                  item.selectedColor === selectedColor &&
-                  item.selectedSize === selectedSize &&
-                  item.selectedStorage === selectedStorage
-      );
-
+  const addToCart = (product: Product, color?: string, size?: string, storage?: string) => {
+    setCart((prev) => {
+      const existingIndex = prev.findIndex((item) => item.product.id === product.id);
       if (existingIndex > -1) {
-        const updated = [...prevCart];
-        updated[existingIndex].quantity += 1;
-        return updated;
+        const next = [...prev];
+        next[existingIndex].quantity += 1;
+        return next;
       }
-
-      return [
-        ...prevCart,
-        {
-          product,
-          quantity: 1,
-          selectedColor,
-          selectedSize,
-          selectedStorage
-        }
-      ];
+      return [...prev, { product, quantity: 1, selectedColor: color, selectedSize: size, selectedStorage: storage }];
     });
   };
 
   const removeFromCart = (productId: number) => {
-    setCart((prevCart) => prevCart.filter((item) => item.product.id !== productId));
+    setCart((prev) => prev.filter((item) => item.product.id !== productId));
   };
 
   const updateQuantity = (productId: number, quantity: number) => {
@@ -167,25 +158,20 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
       removeFromCart(productId);
       return;
     }
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.product.id === productId ? { ...item, quantity } : item
-      )
+    setCart((prev) =>
+      prev.map((item) => (item.product.id === productId ? { ...item, quantity } : item))
     );
   };
 
   const clearCart = () => {
     setCart([]);
-    setPromoCode('');
+    setPromoCode(null);
     setPromoDiscount(0);
-    setPromoError('');
   };
 
   const toggleWishlist = (productId: number) => {
     setWishlist((prev) =>
-      prev.includes(productId)
-        ? prev.filter((id) => id !== productId)
-        : [...prev, productId]
+      prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]
     );
   };
 
@@ -194,28 +180,27 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const addAllWishlistToCart = () => {
-    const favoritedProducts = products.filter(p => wishlist.includes(p.id));
-    favoritedProducts.forEach(p => addToCart(p));
+    wishlist.forEach((id) => {
+      const p = products.find((prod) => prod.id === id);
+      if (p) addToCart(p);
+    });
   };
 
   const isWishlisted = (productId: number) => wishlist.includes(productId);
 
-  const applyPromoCode = (code: string): boolean => {
-    const cleanCode = code.trim().toUpperCase();
-    if (cleanCode === 'UZUM2026' || cleanCode === 'UZUM10') {
-      setPromoCode(cleanCode);
-      setPromoDiscount(0.15);
-      setPromoError('');
-      return true;
+  const applyPromoCode = (code: string) => {
+    const trimmed = code.trim().toUpperCase();
+    if (trimmed === 'UZUM2026' || trimmed === 'SALE15') {
+      setPromoCode(trimmed);
+      setPromoDiscount(0.15); // 15% discount
+      setPromoError(null);
     } else {
-      setPromoError(language === 'ru' ? "Неверный промокод. Попробуйте 'UZUM2026'!" : language === 'en' ? "Invalid promo code. Try 'UZUM2026'!" : "Noto'g'ri promokod. 'UZUM2026' kodini sinab ko'ring!");
-      return false;
+      setPromoError('Promokod noto\'g\'ri yoki muddati o\'tgan');
     }
   };
 
-  const loginUser = (phone: string, name: string = 'Xaridor') => {
-    const newUser: User = { phone, name, isLoggedIn: true };
-    setUser(newUser);
+  const loginUser = (phone: string, name: string) => {
+    setUser({ phone, name, isLoggedIn: true });
     setIsAuthOpen(false);
   };
 
@@ -223,8 +208,8 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
   };
 
-  const cartTotalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const cartSubtotal = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+  const cartTotalCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+  const cartSubtotal = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
   const cartDiscountedTotal = Math.round(cartSubtotal * (1 - promoDiscount));
 
   return (
@@ -234,22 +219,30 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
         cart,
         wishlist,
         selectedCity,
-        searchQuery,
+        user,
+        selectedProduct,
         selectedCategory,
-        currentView,
-        language,
+        searchQuery,
         isCatalogOpen,
         isCartOpen,
         isAuthOpen,
         isLocationOpen,
-        selectedProduct,
-        user,
+        currentView,
         promoCode,
         promoDiscount,
         promoError,
-
-        t,
+        language,
+        setSelectedCity,
+        setSelectedProduct,
+        setSelectedCategory,
+        setSearchQuery,
+        setIsCatalogOpen,
+        setIsCartOpen,
+        setIsAuthOpen,
+        setIsLocationOpen,
+        setCurrentView,
         setLanguage,
+        t,
         addToCart,
         removeFromCart,
         updateQuantity,
@@ -258,22 +251,12 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
         clearWishlist,
         addAllWishlistToCart,
         isWishlisted,
-        setSelectedCity,
-        setSearchQuery,
-        setSelectedCategory,
-        setCurrentView,
-        setIsCatalogOpen,
-        setIsCartOpen,
-        setIsAuthOpen,
-        setIsLocationOpen,
-        setSelectedProduct,
         applyPromoCode,
         loginUser,
         logoutUser,
-
         cartTotalCount,
         cartSubtotal,
-        cartDiscountedTotal
+        cartDiscountedTotal,
       }}
     >
       {children}

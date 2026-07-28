@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MapPin, ChevronDown, PackageCheck, Check } from 'lucide-react';
+import { MapPin, Globe, ChevronDown, PackageCheck, Check } from 'lucide-react';
 import { useShop } from '../../context/ShopContext';
 import type { Language } from '../../i18n/translations';
 
@@ -63,20 +63,24 @@ export const TopBar: React.FC = () => {
           {/* Multi-Language Switcher Dropdown */}
           <div className="relative" ref={langRef}>
             <button 
-              className="flex items-center gap-1.5 font-medium text-gray-700 hover:text-uzum-purple transition-colors px-2 py-0.5 rounded-md hover:bg-gray-200/50"
+              className="flex items-center gap-1.5 font-semibold text-gray-700 hover:text-uzum-purple transition-colors px-2.5 py-1 rounded-lg hover:bg-gray-200/60 border border-transparent hover:border-gray-300/60"
               onClick={() => setIsLangDropdownOpen(prev => !prev)}
             >
+              <Globe size={14} className="text-uzum-purple shrink-0" />
               <span className="text-sm">{currentLangObj.flag}</span>
               <span>{currentLangObj.label}</span>
-              <ChevronDown size={12} />
+              <ChevronDown size={12} className={`transition-transform duration-200 ${isLangDropdownOpen ? 'rotate-180 text-uzum-purple' : 'text-gray-400'}`} />
             </button>
 
             {isLangDropdownOpen && (
-              <div className="absolute right-0 top-full mt-1 bg-white rounded-lg shadow-xl border border-gray-200 py-1.5 w-36 z-50 animate-fade">
+              <div className="absolute right-0 top-full mt-1.5 bg-white rounded-xl shadow-2xl border border-gray-200 py-1.5 w-40 z-50 animate-fade">
+                <div className="px-3 py-1 text-[10px] font-bold text-gray-400 uppercase tracking-wider border-b border-gray-100 mb-1">
+                  Tilni tanlang
+                </div>
                 {languages.map((lang) => (
                   <button
                     key={lang.code}
-                    className={`w-full flex items-center justify-between px-3 py-1.5 text-xs transition-colors ${
+                    className={`w-full flex items-center justify-between px-3 py-2 text-xs font-semibold transition-colors ${
                       language === lang.code
                         ? 'bg-uzum-purple-light text-uzum-purple font-bold'
                         : 'text-gray-700 hover:bg-gray-100'
@@ -87,10 +91,10 @@ export const TopBar: React.FC = () => {
                     }}
                   >
                     <span className="flex items-center gap-2">
-                      <span>{lang.flag}</span>
+                      <span className="text-sm">{lang.flag}</span>
                       <span>{lang.label}</span>
                     </span>
-                    {language === lang.code && <Check size={14} className="text-uzum-purple" />}
+                    {language === lang.code && <Check size={15} className="text-uzum-purple font-bold" />}
                   </button>
                 ))}
               </div>
