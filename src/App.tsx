@@ -1,20 +1,24 @@
 import React from 'react';
-import { ShopProvider } from './context/ShopContext';
+import { ShopProvider, useShop } from './context/ShopContext';
 import { TopBar } from './components/layout/TopBar';
 import { Navbar } from './components/layout/Navbar';
 import { CategoryBar } from './components/layout/CategoryBar';
 import { CatalogMegaMenu } from './components/catalog/CatalogMegaMenu';
 import { HomePage } from './pages/HomePage';
+import { WishlistPage } from './pages/WishlistPage';
+import { CheckoutPage } from './pages/CheckoutPage';
 import { CartDrawer } from './components/cart/CartDrawer';
 import { ProductDetailModal } from './components/product/ProductDetailModal';
 import { AuthModal } from './components/auth/AuthModal';
 import { LocationModal } from './components/common/LocationModal';
 import { Footer } from './components/layout/Footer';
 
-export const App: React.FC = () => {
+const AppContent: React.FC = () => {
+  const { currentView } = useShop();
+
   return (
-    <ShopProvider>
-      <div className="app-layout">
+    <div className="min-h-screen flex flex-col justify-between bg-uzum-gray">
+      <div>
         {/* Header Stack */}
         <TopBar />
         <Navbar />
@@ -23,8 +27,10 @@ export const App: React.FC = () => {
         {/* Mega Menu Dropdown */}
         <CatalogMegaMenu />
 
-        {/* Main Body View */}
-        <HomePage />
+        {/* Dynamic Main View */}
+        {currentView === 'home' && <HomePage />}
+        {currentView === 'wishlist' && <WishlistPage />}
+        {currentView === 'checkout' && <CheckoutPage />}
 
         {/* Slide-out Cart Drawer */}
         <CartDrawer />
@@ -33,10 +39,18 @@ export const App: React.FC = () => {
         <ProductDetailModal />
         <AuthModal />
         <LocationModal />
-
-        {/* Footer */}
-        <Footer />
       </div>
+
+      {/* Footer */}
+      <Footer />
+    </div>
+  );
+};
+
+export const App: React.FC = () => {
+  return (
+    <ShopProvider>
+      <AppContent />
     </ShopProvider>
   );
 };

@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { Product, CartItem, City, User } from '../types';
 import { CITIES, PRODUCTS } from '../data/mockData';
 
+export type ViewType = 'home' | 'wishlist' | 'checkout';
+
 interface ShopContextType {
   products: Product[];
   cart: CartItem[];
@@ -9,6 +11,7 @@ interface ShopContextType {
   selectedCity: City;
   searchQuery: string;
   selectedCategory: string | null;
+  currentView: ViewType;
   
   // Modals & Panels
   isCatalogOpen: boolean;
@@ -22,7 +25,7 @@ interface ShopContextType {
   
   // Promo code
   promoCode: string;
-  promoDiscount: number; // e.g. 0.10 for 10%
+  promoDiscount: number;
   promoError: string;
 
   // Actions
@@ -31,11 +34,14 @@ interface ShopContextType {
   updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
   toggleWishlist: (productId: number) => void;
+  clearWishlist: () => void;
+  addAllWishlistToCart: () => void;
   isWishlisted: (productId: number) => boolean;
   
   setSelectedCity: (city: City) => void;
   setSearchQuery: (query: string) => void;
   setSelectedCategory: (category: string | null) => void;
+  setCurrentView: (view: ViewType) => void;
   
   setIsCatalogOpen: (isOpen: boolean | ((prev: boolean) => boolean)) => void;
   setIsCartOpen: (isOpen: boolean) => void;
@@ -67,6 +73,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [selectedCity, setSelectedCity] = useState<City>(CITIES[0]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [currentView, setCurrentView] = useState<ViewType>('home');
 
   // Modals state
   const [isCatalogOpen, setIsCatalogOpen] = useState<boolean>(false);
@@ -161,13 +168,22 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
   };
 
+  const clearWishlist = () => {
+    setWishlist([]);
+  };
+
+  const addAllWishlistToCart = () => {
+    const favoritedProducts = products.filter(p => wishlist.includes(p.id));
+    favoritedProducts.forEach(p => addToCart(p));
+  };
+
   const isWishlisted = (productId: number) => wishlist.includes(productId);
 
   const applyPromoCode = (code: string): boolean => {
     const cleanCode = code.trim().toUpperCase();
     if (cleanCode === 'UZUM2026' || cleanCode === 'UZUM10') {
       setPromoCode(cleanCode);
-      setPromoDiscount(0.15); // 15% discount
+      setPromoDiscount(0.15);
       setPromoError('');
       return true;
     } else {
@@ -199,6 +215,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
         selectedCity,
         searchQuery,
         selectedCategory,
+        currentView,
         isCatalogOpen,
         isCartOpen,
         isAuthOpen,
@@ -214,10 +231,13 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
         updateQuantity,
         clearCart,
         toggleWishlist,
+        clearWishlist,
+        addAllWishlistToCart,
         isWishlisted,
         setSelectedCity,
         setSearchQuery,
         setSelectedCategory,
+        setCurrentView,
         setIsCatalogOpen,
         setIsCartOpen,
         setIsAuthOpen,

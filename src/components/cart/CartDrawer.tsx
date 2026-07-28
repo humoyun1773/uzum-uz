@@ -9,7 +9,6 @@ export const CartDrawer: React.FC = () => {
     setIsCartOpen,
     removeFromCart,
     updateQuantity,
-    clearCart,
     promoCode,
     promoDiscount,
     promoError,
@@ -17,11 +16,11 @@ export const CartDrawer: React.FC = () => {
     cartTotalCount,
     cartSubtotal,
     cartDiscountedTotal,
-    selectedCity
+    selectedCity,
+    setCurrentView
   } = useShop();
 
   const [inputCode, setInputCode] = useState('');
-  const [isOrderedSuccess, setIsOrderedSuccess] = useState(false);
 
   if (!isCartOpen) return null;
 
@@ -30,14 +29,10 @@ export const CartDrawer: React.FC = () => {
     applyPromoCode(inputCode);
   };
 
-  const handleCheckout = () => {
+  const handleGoToCheckout = () => {
     if (cart.length === 0) return;
-    setIsOrderedSuccess(true);
-    setTimeout(() => {
-      clearCart();
-      setIsOrderedSuccess(false);
-      setIsCartOpen(false);
-    }, 2800);
+    setIsCartOpen(false);
+    setCurrentView('checkout');
   };
 
   return (
@@ -58,19 +53,18 @@ export const CartDrawer: React.FC = () => {
         </div>
 
         {/* Body */}
-        {isOrderedSuccess ? (
-          <div className="flex-1 flex flex-col items-center justify-center p-8 text-center animate-fade">
-            <CheckCircle2 size={64} className="text-uzum-green mb-5" />
-            <h3 className="text-2xl font-bold text-uzum-dark mb-3">Buyurtma muvaffaqiyatli rasmiylashtirildi!</h3>
-            <p className="text-sm text-gray-600">Buyurtma raqami: <strong className="text-uzum-purple">#UZ-{Math.floor(100000 + Math.random() * 900000)}</strong></p>
-            <p className="text-xs text-gray-500 mt-2">Yetkazib berish: <strong>{selectedCity.name}</strong> ({selectedCity.deliveryDays})</p>
-          </div>
-        ) : cart.length === 0 ? (
+        {cart.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
             <ShoppingBag size={64} className="text-gray-300 mb-4" />
             <h3 className="text-lg font-bold text-uzum-dark mb-2">Savatda hozircha hech narsa yo'q</h3>
             <p className="text-sm text-gray-500 mb-6 max-w-xs">Bosh sahifadagi mahsulotlardan birini tanlang yoki qidiruvdan foydalaning</p>
-            <button className="bg-uzum-purple text-white px-6 py-3 rounded-lg font-semibold text-sm hover:bg-uzum-purple-hover transition-colors" onClick={() => setIsCartOpen(false)}>
+            <button 
+              className="bg-uzum-purple text-white px-6 py-3 rounded-lg font-semibold text-sm hover:bg-uzum-purple-hover transition-colors" 
+              onClick={() => {
+                setIsCartOpen(false);
+                setCurrentView('home');
+              }}
+            >
               Xarid qilishni boshlash
             </button>
           </div>
@@ -159,7 +153,10 @@ export const CartDrawer: React.FC = () => {
                 </div>
               </div>
 
-              <button className="w-full bg-uzum-purple text-white py-3.5 rounded-lg font-bold text-sm flex items-center justify-center gap-2 hover:bg-uzum-purple-hover transition-all shadow-md" onClick={handleCheckout}>
+              <button 
+                className="w-full bg-uzum-purple text-white py-3.5 rounded-lg font-bold text-sm flex items-center justify-center gap-2 hover:bg-uzum-purple-hover transition-all shadow-md" 
+                onClick={handleGoToCheckout}
+              >
                 <span>Rasmiylashtirishga o'tish</span>
                 <ArrowRight size={18} />
               </button>

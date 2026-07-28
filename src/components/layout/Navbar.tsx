@@ -16,7 +16,9 @@ export const Navbar: React.FC = () => {
     setIsCartOpen,
     setIsAuthOpen,
     setSelectedProduct,
-    setSelectedCategory
+    setSelectedCategory,
+    setCurrentView,
+    currentView
   } = useShop();
 
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -45,6 +47,13 @@ export const Navbar: React.FC = () => {
     setSearchQuery('');
   };
 
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setSelectedCategory(null);
+    setSearchQuery('');
+    setCurrentView('home');
+  };
+
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50 py-3 shadow-xs">
       <div className="max-w-[1280px] mx-auto px-4 flex items-center gap-4 md:gap-6">
@@ -52,7 +61,7 @@ export const Navbar: React.FC = () => {
         <a 
           href="#" 
           className="flex items-center gap-2.5 group"
-          onClick={() => setSelectedCategory(null)}
+          onClick={handleLogoClick}
         >
           <div className="w-10 h-10 bg-gradient-to-br from-uzum-purple to-[#5C00D2] rounded-xl flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
             <Sparkles size={22} className="text-white" />
@@ -142,9 +151,14 @@ export const Navbar: React.FC = () => {
           </button>
 
           {/* Wishlist */}
-          <a href="#wishlist" className="flex flex-col items-center gap-0.5 text-gray-600 hover:text-uzum-purple transition-colors">
+          <button 
+            className={`flex flex-col items-center gap-0.5 transition-colors ${
+              currentView === 'wishlist' ? 'text-uzum-purple font-semibold' : 'text-gray-600 hover:text-uzum-purple'
+            }`}
+            onClick={() => setCurrentView('wishlist')}
+          >
             <div className="relative">
-              <Heart size={22} />
+              <Heart size={22} fill={currentView === 'wishlist' ? '#7000FF' : 'none'} />
               {wishlist.length > 0 && (
                 <span className="absolute -top-1.5 -right-2 bg-uzum-red text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
                   {wishlist.length}
@@ -152,7 +166,7 @@ export const Navbar: React.FC = () => {
               )}
             </div>
             <span className="text-xs font-medium hidden sm:inline">Saralanganlar</span>
-          </a>
+          </button>
 
           {/* Cart Opener */}
           <button
