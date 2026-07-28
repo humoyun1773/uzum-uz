@@ -4,7 +4,6 @@ import { HeroSlider } from '../components/ui/HeroSlider';
 import { ServiceBar } from '../components/ui/ServiceBar';
 import { ProductCard } from '../components/ui/ProductCard';
 import { Flame, Sparkles, Filter, RefreshCcw } from 'lucide-react';
-import './HomePage.css';
 
 export const HomePage: React.FC = () => {
   const {
@@ -40,8 +39,8 @@ export const HomePage: React.FC = () => {
   };
 
   return (
-    <main className="main-content">
-      <div className="container">
+    <main className="pb-10">
+      <div className="max-w-[1280px] mx-auto px-4">
         {/* Render Banner Slider & Service Bar only when not actively searching/filtering */}
         {!isFiltered && (
           <>
@@ -51,30 +50,33 @@ export const HomePage: React.FC = () => {
         )}
 
         {/* Section Header */}
-        <div className="section-header">
-          <div className="section-title-box">
+        <div className="flex items-center justify-between mb-5 pt-2">
+          <div className="flex items-center gap-2.5">
             {selectedCategory === 'hot' ? (
               <>
-                <Flame size={24} className="section-icon text-red" />
-                <h2>Hafta aksiyalari va katta chegirmalar</h2>
+                <Flame size={24} className="text-uzum-red shrink-0" />
+                <h2 className="text-xl md:text-2xl font-extrabold text-uzum-dark">Hafta aksiyalari va katta chegirmalar</h2>
               </>
             ) : isFiltered ? (
               <>
-                <Filter size={24} className="section-icon text-purple" />
-                <h2>
+                <Filter size={24} className="text-uzum-purple shrink-0" />
+                <h2 className="text-xl md:text-2xl font-extrabold text-uzum-dark">
                   {selectedCategory ? `${selectedCategory}` : 'Qidiruv natijalari'}: {displayedProducts.length} ta tovar
                 </h2>
               </>
             ) : (
               <>
-                <Sparkles size={24} className="section-icon text-purple" />
-                <h2>Mashhur tovarlar va tavsiyalar</h2>
+                <Sparkles size={24} className="text-uzum-purple shrink-0" />
+                <h2 className="text-xl md:text-2xl font-extrabold text-uzum-dark">Mashhur tovarlar va tavsiyalar</h2>
               </>
             )}
           </div>
 
           {isFiltered && (
-            <button className="reset-filter-btn" onClick={handleResetFilters}>
+            <button 
+              className="inline-flex items-center gap-1.5 bg-uzum-purple-light text-uzum-purple hover:bg-uzum-purple hover:text-white px-3.5 py-2 rounded-lg text-xs md:text-sm font-semibold transition-all"
+              onClick={handleResetFilters}
+            >
               <RefreshCcw size={16} />
               <span>Filtrlarni tozalash</span>
             </button>
@@ -83,16 +85,19 @@ export const HomePage: React.FC = () => {
 
         {/* Product Grid */}
         {displayedProducts.length > 0 ? (
-          <div className="product-grid">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
             {displayedProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         ) : (
-          <div className="no-results-box animate-fade">
-            <h3>Siz izlagan mahsulot topilmadi</h3>
-            <p>Iltimos, boshqa kalit so'zlarni kiriting yoki filtrni tozalang</p>
-            <button className="reset-filter-btn large" onClick={handleResetFilters}>
+          <div className="text-center py-16 px-5 bg-white rounded-xl border border-gray-200 animate-fade">
+            <h3 className="text-xl font-bold text-uzum-dark mb-2">Siz izlagan mahsulot topilmadi</h3>
+            <p className="text-sm text-gray-500 mb-4">Iltimos, boshqa kalit so'zlarni kiriting yoki filtrni tozalang</p>
+            <button 
+              className="inline-flex items-center gap-1.5 bg-uzum-purple text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-uzum-purple-hover transition-colors"
+              onClick={handleResetFilters}
+            >
               Barcha mahsulotlarni ko'rish
             </button>
           </div>
