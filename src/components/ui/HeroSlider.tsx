@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { BANNERS } from '../../data/mockData';
+import { useShop } from '../../context/ShopContext';
 import { ChevronLeft, ChevronRight, ShieldCheck } from 'lucide-react';
 
 export const HeroSlider: React.FC = () => {
+  const { t } = useShop();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -41,7 +43,7 @@ export const HeroSlider: React.FC = () => {
           </p>
           
           <button className="bg-uzum-yellow text-uzum-dark font-bold text-sm md:text-base px-8 py-3.5 rounded-lg hover:bg-uzum-yellow-hover hover:-translate-y-0.5 transition-all shadow-md">
-            Batafsil ma'lumot
+            {t('banner.see_more')}
           </button>
         </div>
 

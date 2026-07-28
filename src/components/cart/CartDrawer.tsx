@@ -17,7 +17,8 @@ export const CartDrawer: React.FC = () => {
     cartSubtotal,
     cartDiscountedTotal,
     selectedCity,
-    setCurrentView
+    setCurrentView,
+    t
   } = useShop();
 
   const [inputCode, setInputCode] = useState('');
@@ -42,9 +43,9 @@ export const CartDrawer: React.FC = () => {
         <div className="p-5 border-b border-gray-200 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <ShoppingBag size={22} className="text-uzum-purple" />
-            <h2 className="text-xl font-bold text-uzum-dark">Savat</h2>
+            <h2 className="text-xl font-bold text-uzum-dark">{t('cart.title')}</h2>
             <span className="text-xs font-semibold bg-uzum-purple-light text-uzum-purple px-2.5 py-0.5 rounded-full">
-              {cartTotalCount} ta mahsulot
+              {cartTotalCount} {t('cart.items_count')}
             </span>
           </div>
           <button className="text-gray-400 hover:text-uzum-dark transition-colors" onClick={() => setIsCartOpen(false)}>
@@ -56,8 +57,8 @@ export const CartDrawer: React.FC = () => {
         {cart.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
             <ShoppingBag size={64} className="text-gray-300 mb-4" />
-            <h3 className="text-lg font-bold text-uzum-dark mb-2">Savatda hozircha hech narsa yo'q</h3>
-            <p className="text-sm text-gray-500 mb-6 max-w-xs">Bosh sahifadagi mahsulotlardan birini tanlang yoki qidiruvdan foydalaning</p>
+            <h3 className="text-lg font-bold text-uzum-dark mb-2">{t('cart.empty_title')}</h3>
+            <p className="text-sm text-gray-500 mb-6 max-w-xs">{t('cart.empty_sub')}</p>
             <button 
               className="bg-uzum-purple text-white px-6 py-3 rounded-lg font-semibold text-sm hover:bg-uzum-purple-hover transition-colors" 
               onClick={() => {
@@ -65,7 +66,7 @@ export const CartDrawer: React.FC = () => {
                 setCurrentView('home');
               }}
             >
-              Xarid qilishni boshlash
+              {t('cart.start_shopping')}
             </button>
           </div>
         ) : (
@@ -79,7 +80,7 @@ export const CartDrawer: React.FC = () => {
                   <div className="flex-1 flex flex-col justify-between">
                     <div>
                       <h4 className="text-sm font-medium text-uzum-dark leading-snug line-clamp-2">{item.product.title}</h4>
-                      <p className="text-xs text-gray-400 mt-0.5">Sotuvchi: {item.product.seller}</p>
+                      <p className="text-xs text-gray-400 mt-0.5">{t('product.seller')} {item.product.seller}</p>
                     </div>
                     
                     <div className="text-sm font-bold text-uzum-purple mt-1">
@@ -99,7 +100,7 @@ export const CartDrawer: React.FC = () => {
 
                       <button className="flex items-center gap-1 text-red-500 text-xs font-medium hover:opacity-80 transition-opacity" onClick={() => removeFromCart(item.product.id)}>
                         <Trash2 size={16} />
-                        <span>O'chirish</span>
+                        <span>{t('cart.delete')}</span>
                       </button>
                     </div>
                   </div>
@@ -114,19 +115,19 @@ export const CartDrawer: React.FC = () => {
                   <Tag size={16} className="text-gray-400" />
                   <input
                     type="text"
-                    placeholder="Promokod (masalan: UZUM2026)"
+                    placeholder={t('cart.promo_placeholder')}
                     value={inputCode}
                     onChange={(e) => setInputCode(e.target.value)}
                     className="flex-1 px-2.5 py-2 text-xs outline-none"
                   />
                   <button type="submit" className="bg-uzum-purple-light text-uzum-purple hover:bg-uzum-purple hover:text-white px-3.5 py-2 text-xs font-semibold transition-colors">
-                    Qo'llash
+                    {t('cart.apply')}
                   </button>
                 </div>
                 {promoCode && (
                   <div className="flex items-center gap-1.5 text-xs text-uzum-green font-medium">
                     <CheckCircle2 size={14} />
-                    Promokod <strong>{promoCode}</strong> qo'llandi! (-15%)
+                    Promokod <strong>{promoCode}</strong> (-15%)
                   </div>
                 )}
                 {promoError && <p className="text-xs text-red-500">{promoError}</p>}
@@ -139,7 +140,7 @@ export const CartDrawer: React.FC = () => {
                 </div>
                 <div className="flex justify-between text-gray-600">
                   <span>Yetkazib berish ({selectedCity.name}):</span>
-                  <span className="text-uzum-green font-semibold">Bepul</span>
+                  <span className="text-uzum-green font-semibold">{t('cart.delivery_free')}</span>
                 </div>
                 {promoDiscount > 0 && (
                   <div className="flex justify-between text-uzum-purple font-semibold">
@@ -148,7 +149,7 @@ export const CartDrawer: React.FC = () => {
                   </div>
                 )}
                 <div className="flex justify-between text-lg font-extrabold text-uzum-dark pt-2.5 border-t border-dashed border-gray-300">
-                  <span>Jami:</span>
+                  <span>{t('cart.total')}</span>
                   <span className="text-uzum-purple">{cartDiscountedTotal.toLocaleString('uz-UZ')} so'm</span>
                 </div>
               </div>
@@ -157,7 +158,7 @@ export const CartDrawer: React.FC = () => {
                 className="w-full bg-uzum-purple text-white py-3.5 rounded-lg font-bold text-sm flex items-center justify-center gap-2 hover:bg-uzum-purple-hover transition-all shadow-md" 
                 onClick={handleGoToCheckout}
               >
-                <span>Rasmiylashtirishga o'tish</span>
+                <span>{t('cart.proceed_checkout')}</span>
                 <ArrowRight size={18} />
               </button>
             </div>

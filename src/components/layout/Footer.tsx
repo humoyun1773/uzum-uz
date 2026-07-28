@@ -1,17 +1,20 @@
 import React from 'react';
+import { useShop } from '../../context/ShopContext';
 import { Sparkles, QrCode, ShieldCheck } from 'lucide-react';
 
 export const Footer: React.FC = () => {
+  const { t } = useShop();
+
   return (
     <footer className="bg-white border-t border-gray-200 pt-12 pb-6 mt-16">
       <div className="max-w-[1280px] mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-gray-100">
           {/* Col 1 */}
           <div>
-            <h4 className="text-sm font-bold text-uzum-dark mb-4">Biz haqimizda</h4>
+            <h4 className="text-sm font-bold text-uzum-dark mb-4">{t('footer.about')}</h4>
             <ul className="flex flex-col gap-2.5 text-xs md:text-sm text-gray-500">
-              <li><a href="#about" className="hover:text-uzum-purple transition-colors">Topshirish punktlari</a></li>
-              <li><a href="#jobs" className="hover:text-uzum-purple transition-colors">Vakansiyalar</a></li>
+              <li><a href="#about" className="hover:text-uzum-purple transition-colors">{t('footer.pickups')}</a></li>
+              <li><a href="#jobs" className="hover:text-uzum-purple transition-colors">{t('footer.jobs')}</a></li>
               <li><a href="#press" className="hover:text-uzum-purple transition-colors">Biz haqimizda matbuotda</a></li>
               <li><a href="#sustainability" className="hover:text-uzum-purple transition-colors">Barqaror rivojlanish</a></li>
             </ul>
@@ -19,20 +22,20 @@ export const Footer: React.FC = () => {
 
           {/* Col 2 */}
           <div>
-            <h4 className="text-sm font-bold text-uzum-dark mb-4">Foydalanuvchilarga</h4>
+            <h4 className="text-sm font-bold text-uzum-dark mb-4">{t('footer.for_users')}</h4>
             <ul className="flex flex-col gap-2.5 text-xs md:text-sm text-gray-500">
-              <li><a href="#contact" className="hover:text-uzum-purple transition-colors">Biz bilan bog'lanish</a></li>
-              <li><a href="#faq" className="hover:text-uzum-purple transition-colors">Savol-javoblar</a></li>
-              <li><a href="#returns" className="hover:text-uzum-purple transition-colors">Mahsulotni qaytarish</a></li>
+              <li><a href="#contact" className="hover:text-uzum-purple transition-colors">{t('footer.contact')}</a></li>
+              <li><a href="#faq" className="hover:text-uzum-purple transition-colors">{t('topbar.faq')}</a></li>
+              <li><a href="#returns" className="hover:text-uzum-purple transition-colors">{t('footer.returns')}</a></li>
               <li><a href="#guarantee" className="hover:text-uzum-purple transition-colors">Kafolat shartlari</a></li>
             </ul>
           </div>
 
           {/* Col 3 */}
           <div>
-            <h4 className="text-sm font-bold text-uzum-dark mb-4">Tadbirkorlarga</h4>
+            <h4 className="text-sm font-bold text-uzum-dark mb-4">{t('footer.for_sellers')}</h4>
             <ul className="flex flex-col gap-2.5 text-xs md:text-sm text-gray-500">
-              <li><a href="#sell" className="hover:text-uzum-purple transition-colors">Uzum da soting</a></li>
+              <li><a href="#sell" className="hover:text-uzum-purple transition-colors">{t('footer.sell')}</a></li>
               <li><a href="#seller-cabinet" className="hover:text-uzum-purple transition-colors">Sotuvchi kabinetiga kirish</a></li>
               <li><a href="#fulfillment" className="hover:text-uzum-purple transition-colors">Fulfillment va saqlash</a></li>
               <li><a href="#partner" className="hover:text-uzum-purple transition-colors">Hamkor bo'ling</a></li>
@@ -41,7 +44,7 @@ export const Footer: React.FC = () => {
 
           {/* Col 4 */}
           <div>
-            <h4 className="text-sm font-bold text-uzum-dark mb-4">Ilovani yuklab olish</h4>
+            <h4 className="text-sm font-bold text-uzum-dark mb-4">{t('footer.download_app')}</h4>
             <p className="text-xs text-gray-500 mb-3.5">Kamerangizni QR-kodga qarating va Uzum ilovasini yuklab oling</p>
             
             <div className="flex items-center gap-4">
@@ -65,7 +68,7 @@ export const Footer: React.FC = () => {
             <span>uzum market</span>
           </div>
 
-          <p>2026 © XK «UZUM MARKET». Barcha huquqlar himoyalangan.</p>
+          <p>{t('footer.copyright')}</p>
 
           <div className="flex items-center gap-1.5 text-uzum-green font-medium">
             <ShieldCheck size={16} />

@@ -9,7 +9,8 @@ export const WishlistPage: React.FC = () => {
     wishlist,
     clearWishlist,
     addAllWishlistToCart,
-    setCurrentView
+    setCurrentView,
+    t
   } = useShop();
 
   const favoritedProducts = products.filter(p => wishlist.includes(p.id));
@@ -23,14 +24,14 @@ export const WishlistPage: React.FC = () => {
           onClick={() => setCurrentView('home')}
         >
           <ArrowLeft size={16} />
-          <span>Bosh sahifaga qaytish</span>
+          <span>{t('wishlist.back_home')}</span>
         </button>
 
         {/* Page Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-gray-200">
           <div className="flex items-center gap-3">
             <Heart size={28} className="text-uzum-red fill-uzum-red" />
-            <h1 className="text-2xl font-extrabold text-uzum-dark">Saralangan mahsulotlar</h1>
+            <h1 className="text-2xl font-extrabold text-uzum-dark">{t('wishlist.title')}</h1>
             <span className="text-sm font-semibold bg-uzum-purple-light text-uzum-purple px-3 py-1 rounded-full">
               {favoritedProducts.length} ta tovar
             </span>
@@ -43,7 +44,7 @@ export const WishlistPage: React.FC = () => {
                 onClick={addAllWishlistToCart}
               >
                 <ShoppingBag size={18} />
-                <span>Barchasini savatga qo'shish</span>
+                <span>{t('wishlist.add_all_cart')}</span>
               </button>
 
               <button
@@ -51,7 +52,7 @@ export const WishlistPage: React.FC = () => {
                 onClick={clearWishlist}
               >
                 <Trash2 size={16} />
-                <span>Barchasini o'chirish</span>
+                <span>{t('wishlist.clear_all')}</span>
               </button>
             </div>
           )}
@@ -69,15 +70,15 @@ export const WishlistPage: React.FC = () => {
             <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
               <Heart size={40} className="text-uzum-red" />
             </div>
-            <h2 className="text-xl font-bold text-uzum-dark mb-2">Sizda saralangan tovarlar yo'q</h2>
+            <h2 className="text-xl font-bold text-uzum-dark mb-2">{t('wishlist.empty_title')}</h2>
             <p className="text-sm text-gray-500 mb-6 leading-relaxed">
-              Mahsulot kartochkasidagi yurakcha tugmasini bosing va o'zingizga yoqqan tovarlarni shu yerda saqlang!
+              {t('wishlist.empty_sub')}
             </p>
             <button
               className="bg-uzum-purple text-white px-8 py-3.5 rounded-xl text-sm font-bold hover:bg-uzum-purple-hover transition-all shadow-md"
               onClick={() => setCurrentView('home')}
             >
-              Xarid qilishni boshlash
+              {t('cart.start_shopping')}
             </button>
           </div>
         )}

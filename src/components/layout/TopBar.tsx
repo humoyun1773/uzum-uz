@@ -1,10 +1,30 @@
-import React, { useState } from 'react';
-import { MapPin, Globe, ChevronDown, PackageCheck } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { MapPin, ChevronDown, PackageCheck, Check } from 'lucide-react';
 import { useShop } from '../../context/ShopContext';
+import type { Language } from '../../i18n/translations';
 
 export const TopBar: React.FC = () => {
-  const { selectedCity, setIsLocationOpen } = useShop();
-  const [language, setLanguage] = useState<'uz' | 'ru'>('uz');
+  const { selectedCity, setIsLocationOpen, language, setLanguage, t } = useShop();
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) {
+        setIsLangDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const languages: { code: Language; label: string; flag: string }[] = [
+    { code: 'uz', label: "O'zbekcha", flag: '🇺🇿' },
+    { code: 'ru', label: 'Русский', flag: '🇷🇺' },
+    { code: 'en', label: 'English', flag: '🇬🇧' },
+  ];
+
+  const currentLangObj = languages.find(l => l.code === language) || languages[0];
 
   return (
     <div className="bg-[#F2F4F7] border-b border-gray-200 text-xs text-gray-600 py-1.5 hidden sm:block">
@@ -16,38 +36,66 @@ export const TopBar: React.FC = () => {
             onClick={() => setIsLocationOpen(true)}
           >
             <MapPin size={14} className="text-uzum-purple" />
-            <span>Shahar: <strong className="font-semibold">{selectedCity.name}</strong></span>
+            <span>{t('topbar.city')} <strong className="font-semibold">{selectedCity.name}</strong></span>
           </button>
           
           <div className="w-px h-3.5 bg-gray-300"></div>
 
           <span className="inline-flex items-center gap-1 text-gray-600">
             <PackageCheck size={14} />
-            Topshirish punktlari ({selectedCity.deliveryDays} yetkazish)
+            {t('topbar.pickups')} ({selectedCity.deliveryDays})
           </span>
         </div>
 
         {/* Center */}
         <div className="hidden md:flex items-center text-gray-800 text-[12.5px]">
-          <span>Buyurtmangizni <strong className="font-bold">1 kunda bepul</strong> yetkazib beramiz!</span>
+          <span>{t('topbar.delivery_guarantee')}</span>
         </div>
 
         {/* Right */}
         <div className="flex items-center gap-3">
-          <a href="#sell" className="text-uzum-purple font-semibold hover:underline">Uzum da soting</a>
-          <a href="#faq" className="hover:text-uzum-purple transition-colors">Savol-javoblar</a>
-          <a href="#orders" className="hover:text-uzum-purple transition-colors">Buyurtmalarim</a>
+          <a href="#sell" className="text-uzum-purple font-semibold hover:underline">{t('topbar.sell')}</a>
+          <a href="#faq" className="hover:text-uzum-purple transition-colors">{t('topbar.faq')}</a>
+          <a href="#orders" className="hover:text-uzum-purple transition-colors">{t('topbar.orders')}</a>
           
           <div className="w-px h-3.5 bg-gray-300"></div>
 
-          <button 
-            className="flex items-center gap-1 font-medium text-gray-700 hover:text-uzum-purple transition-colors"
-            onClick={() => setLanguage(l => l === 'uz' ? 'ru' : 'uz')}
-          >
-            <Globe size={14} />
-            <span>{language === 'uz' ? "O'zbekcha" : 'Русский'}</span>
-            <ChevronDown size={12} />
-          </button>
+          {/* Multi-Language Switcher Dropdown */}
+          <div className="relative" ref={langRef}>
+            <button 
+              className="flex items-center gap-1.5 font-medium text-gray-700 hover:text-uzum-purple transition-colors px-2 py-0.5 rounded-md hover:bg-gray-200/50"
+              onClick={() => setIsLangDropdownOpen(prev => !prev)}
+            >
+              <span className="text-sm">{currentLangObj.flag}</span>
+              <span>{currentLangObj.label}</span>
+              <ChevronDown size={12} />
+            </button>
+
+            {isLangDropdownOpen && (
+              <div className="absolute right-0 top-full mt-1 bg-white rounded-lg shadow-xl border border-gray-200 py-1.5 w-36 z-50 animate-fade">
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    className={`w-full flex items-center justify-between px-3 py-1.5 text-xs transition-colors ${
+                      language === lang.code
+                        ? 'bg-uzum-purple-light text-uzum-purple font-bold'
+                        : 'text-gray-700 hover:bg-gray-100'
+                    }`}
+                    onClick={() => {
+                      setLanguage(lang.code);
+                      setIsLangDropdownOpen(false);
+                    }}
+                  >
+                    <span className="flex items-center gap-2">
+                      <span>{lang.flag}</span>
+                      <span>{lang.label}</span>
+                    </span>
+                    {language === lang.code && <Check size={14} className="text-uzum-purple" />}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

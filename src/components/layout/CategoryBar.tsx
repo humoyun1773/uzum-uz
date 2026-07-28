@@ -4,7 +4,11 @@ import { useShop } from '../../context/ShopContext';
 import { Flame } from 'lucide-react';
 
 export const CategoryBar: React.FC = () => {
-  const { selectedCategory, setSelectedCategory } = useShop();
+  const { selectedCategory, setSelectedCategory, t } = useShop();
+
+  const getCategoryTranslation = (catId: string, defaultName: string) => {
+    return t(`cat.${catId}`) !== `cat.${catId}` ? t(`cat.${catId}`) : defaultName;
+  };
 
   return (
     <nav className="bg-white border-b border-gray-200 py-2 overflow-x-auto whitespace-nowrap">
@@ -18,7 +22,7 @@ export const CategoryBar: React.FC = () => {
           onClick={() => setSelectedCategory(selectedCategory === 'hot' ? null : 'hot')}
         >
           <Flame size={16} className={selectedCategory === 'hot' ? 'text-white' : 'text-uzum-red'} />
-          <span>Hafta aksiyalari</span>
+          <span>{t('cat.hot')}</span>
         </button>
 
         {CATEGORIES.map((cat) => (
@@ -31,7 +35,7 @@ export const CategoryBar: React.FC = () => {
             }`}
             onClick={() => setSelectedCategory(selectedCategory === cat.name ? null : cat.name)}
           >
-            <span>{cat.name}</span>
+            <span>{getCategoryTranslation(cat.id, cat.name)}</span>
           </button>
         ))}
       </div>

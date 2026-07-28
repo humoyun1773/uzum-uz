@@ -16,7 +16,8 @@ export const CheckoutPage: React.FC = () => {
     setCurrentView,
     selectedCity,
     setSelectedCity,
-    user
+    user,
+    t
   } = useShop();
 
   const [deliveryType, setDeliveryType] = useState<'pickup' | 'courier'>('pickup');
@@ -42,7 +43,7 @@ export const CheckoutPage: React.FC = () => {
 
     const newOrder = {
       orderId: `UZ-${Math.floor(100000 + Math.random() * 900000)}`,
-      deliveryDate: `${selectedCity.deliveryDays} ichida (Ertaga 12:00 gacha)`,
+      deliveryDate: `${selectedCity.deliveryDays} (${t('service.delivery_title')})`,
       totalAmount: finalPayableTotal
     };
 
@@ -60,38 +61,38 @@ export const CheckoutPage: React.FC = () => {
             </div>
 
             <h1 className="text-2xl md:text-3xl font-extrabold text-uzum-dark mb-2">
-              Rahmat! Buyurtmangiz rasmiylashtirildi
+              {t('checkout.success_title')}
             </h1>
             <p className="text-sm text-gray-500 mb-6">
-              Buyurtmangiz raqami: <strong className="text-uzum-purple text-base">#{confirmedOrder.orderId}</strong>
+              {t('checkout.order_num')} <strong className="text-uzum-purple text-base">#{confirmedOrder.orderId}</strong>
             </p>
 
             {/* Receipt Details Box */}
             <div className="bg-gray-50 rounded-xl p-5 text-left mb-8 space-y-3 text-xs md:text-sm text-gray-700 border border-gray-200">
               <div className="flex justify-between border-b border-gray-200 pb-2">
-                <span className="text-gray-500">Yetkazib berish vaqti:</span>
+                <span className="text-gray-500">{t('checkout.receipt_delivery')}</span>
                 <strong className="text-uzum-dark">{confirmedOrder.deliveryDate}</strong>
               </div>
 
               <div className="flex justify-between border-b border-gray-200 pb-2">
-                <span className="text-gray-500">Qabul qiluvchi:</span>
+                <span className="text-gray-500">{t('checkout.receipt_recipient')}</span>
                 <strong className="text-uzum-dark">{recipientName} ({recipientPhone})</strong>
               </div>
 
               <div className="flex justify-between border-b border-gray-200 pb-2">
-                <span className="text-gray-500">Manzil:</span>
+                <span className="text-gray-500">{t('checkout.receipt_address')}</span>
                 <strong className="text-uzum-dark">{selectedCity.name}, {deliveryType === 'pickup' ? pickupPoint : address}</strong>
               </div>
 
               <div className="flex justify-between border-b border-gray-200 pb-2">
-                <span className="text-gray-500">To'lov usuli:</span>
+                <span className="text-gray-500">{t('checkout.receipt_payment')}</span>
                 <strong className="text-uzum-purple">
-                  {paymentMethod === 'nasiya' ? 'Uzum Nasiya (Bo\'lib to\'lash)' : paymentMethod === 'card' ? 'Humo / Uzcard kartasi' : 'Naqd pul / Terminal'}
+                  {paymentMethod === 'nasiya' ? t('checkout.method_nasiya') : paymentMethod === 'card' ? t('checkout.method_card') : t('checkout.method_cash')}
                 </strong>
               </div>
 
               <div className="flex justify-between pt-1 text-base font-extrabold text-uzum-dark">
-                <span>Jami to'lov:</span>
+                <span>{t('checkout.receipt_total')}</span>
                 <span className="text-uzum-purple">{confirmedOrder.totalAmount.toLocaleString('uz-UZ')} so'm</span>
               </div>
             </div>
@@ -104,7 +105,7 @@ export const CheckoutPage: React.FC = () => {
                   setCurrentView('home');
                 }}
               >
-                Bosh sahifaga qaytish
+                {t('wishlist.back_home')}
               </button>
             </div>
           </div>
@@ -118,13 +119,13 @@ export const CheckoutPage: React.FC = () => {
       <main className="pb-16 pt-8 animate-fade">
         <div className="max-w-md mx-auto px-4 text-center">
           <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-xs">
-            <h2 className="text-xl font-bold text-uzum-dark mb-2">Savatda tovarlar yo'q</h2>
-            <p className="text-sm text-gray-500 mb-6">Rasmiylashtirish uchun savatingizga mahsulot qo'shing</p>
+            <h2 className="text-xl font-bold text-uzum-dark mb-2">{t('cart.empty_title')}</h2>
+            <p className="text-sm text-gray-500 mb-6">{t('cart.empty_sub')}</p>
             <button
               className="bg-uzum-purple text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-uzum-purple-hover transition-colors"
               onClick={() => setCurrentView('home')}
             >
-              Bosh sahifaga qaytish
+              {t('wishlist.back_home')}
             </button>
           </div>
         </div>
@@ -141,11 +142,11 @@ export const CheckoutPage: React.FC = () => {
           onClick={() => setCurrentView('home')}
         >
           <ArrowLeft size={16} />
-          <span>Xarid qilishda davom etish</span>
+          <span>{t('checkout.back')}</span>
         </button>
 
         <h1 className="text-2xl md:text-3xl font-extrabold text-uzum-dark mb-6">
-          Buyurtmani rasmiylashtirish
+          {t('checkout.title')}
         </h1>
 
         <form onSubmit={handlePlaceOrder} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -157,12 +158,12 @@ export const CheckoutPage: React.FC = () => {
                 <div className="w-8 h-8 rounded-full bg-uzum-purple-light text-uzum-purple flex items-center justify-center font-bold text-sm">
                   1
                 </div>
-                <h2 className="text-lg font-bold text-uzum-dark">Yetkazib berish usuli va manzili</h2>
+                <h2 className="text-lg font-bold text-uzum-dark">{t('checkout.step1')}</h2>
               </div>
 
               {/* City selector */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold text-gray-700">Shahar:</label>
+                <label className="text-xs font-semibold text-gray-700">{t('topbar.city')}</label>
                 <div className="grid grid-cols-3 gap-2">
                   {CITIES.slice(0, 6).map((c) => (
                     <button
@@ -196,8 +197,8 @@ export const CheckoutPage: React.FC = () => {
                     <Building2 size={20} className="text-uzum-purple" />
                     {deliveryType === 'pickup' && <Check size={18} className="text-uzum-purple font-bold" />}
                   </div>
-                  <span className="text-sm font-bold text-uzum-dark">Topshirish punktiga</span>
-                  <span className="text-xs text-uzum-green font-semibold mt-0.5">Bepul yetkazish</span>
+                  <span className="text-sm font-bold text-uzum-dark">{t('checkout.pickup')}</span>
+                  <span className="text-xs text-uzum-green font-semibold mt-0.5">{t('cart.delivery_free')}</span>
                 </button>
 
                 <button
@@ -213,14 +214,14 @@ export const CheckoutPage: React.FC = () => {
                     <Truck size={20} className="text-uzum-purple" />
                     {deliveryType === 'courier' && <Check size={18} className="text-uzum-purple font-bold" />}
                   </div>
-                  <span className="text-sm font-bold text-uzum-dark">Kuryer orqali eshikgacha</span>
+                  <span className="text-sm font-bold text-uzum-dark">{t('checkout.courier')}</span>
                   <span className="text-xs text-gray-500 mt-0.5">+15 000 so'm</span>
                 </button>
               </div>
 
               {deliveryType === 'pickup' ? (
                 <div className="flex flex-col gap-1.5 pt-2">
-                  <label className="text-xs font-semibold text-gray-700">Topshirish punkti:</label>
+                  <label className="text-xs font-semibold text-gray-700">{t('topbar.pickups')}:</label>
                   <select
                     value={pickupPoint}
                     onChange={(e) => setPickupPoint(e.target.value)}
@@ -233,7 +234,7 @@ export const CheckoutPage: React.FC = () => {
                 </div>
               ) : (
                 <div className="flex flex-col gap-1.5 pt-2">
-                  <label className="text-xs font-semibold text-gray-700">Eshikgacha yetkazish manzili:</label>
+                  <label className="text-xs font-semibold text-gray-700">{t('checkout.receipt_address')}:</label>
                   <input
                     type="text"
                     value={address}
@@ -252,12 +253,12 @@ export const CheckoutPage: React.FC = () => {
                 <div className="w-8 h-8 rounded-full bg-uzum-purple-light text-uzum-purple flex items-center justify-center font-bold text-sm">
                   2
                 </div>
-                <h2 className="text-lg font-bold text-uzum-dark">Qabul qiluvchi ma'lumotlari</h2>
+                <h2 className="text-lg font-bold text-uzum-dark">{t('checkout.step2')}</h2>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-semibold text-gray-700">Ism va Familiya:</label>
+                  <label className="text-xs font-semibold text-gray-700">{t('checkout.recipient_name')}</label>
                   <div className="flex items-center border border-gray-300 rounded-xl px-3 bg-white">
                     <User size={18} className="text-gray-400" />
                     <input
@@ -271,7 +272,7 @@ export const CheckoutPage: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-semibold text-gray-700">Telefon raqam:</label>
+                  <label className="text-xs font-semibold text-gray-700">{t('checkout.recipient_phone')}</label>
                   <div className="flex items-center border border-gray-300 rounded-xl px-3 bg-white">
                     <Phone size={18} className="text-gray-400" />
                     <input
@@ -292,7 +293,7 @@ export const CheckoutPage: React.FC = () => {
                 <div className="w-8 h-8 rounded-full bg-uzum-purple-light text-uzum-purple flex items-center justify-center font-bold text-sm">
                   3
                 </div>
-                <h2 className="text-lg font-bold text-uzum-dark">To'lov usuli</h2>
+                <h2 className="text-lg font-bold text-uzum-dark">{t('checkout.step3')}</h2>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -310,7 +311,7 @@ export const CheckoutPage: React.FC = () => {
                     {paymentMethod === 'nasiya' && <Check size={18} className="text-uzum-purple font-bold" />}
                   </div>
                   <span className="text-sm font-bold text-uzum-dark">Uzum Nasiya</span>
-                  <span className="text-xs text-uzum-purple font-semibold mt-0.5">0-0-12 bo'lib to'lash</span>
+                  <span className="text-xs text-uzum-purple font-semibold mt-0.5">0-0-12</span>
                 </button>
 
                 <button
@@ -327,7 +328,7 @@ export const CheckoutPage: React.FC = () => {
                     {paymentMethod === 'card' && <Check size={18} className="text-uzum-purple font-bold" />}
                   </div>
                   <span className="text-sm font-bold text-uzum-dark">Humo / Uzcard</span>
-                  <span className="text-xs text-gray-500 mt-0.5">Bank kartasi orqali</span>
+                  <span className="text-xs text-gray-500 mt-0.5">Online card</span>
                 </button>
 
                 <button
@@ -343,8 +344,8 @@ export const CheckoutPage: React.FC = () => {
                     <ShieldCheck size={20} className="text-uzum-purple" />
                     {paymentMethod === 'cash' && <Check size={18} className="text-uzum-purple font-bold" />}
                   </div>
-                  <span className="text-sm font-bold text-uzum-dark">Naqd pul / Terminal</span>
-                  <span className="text-xs text-gray-500 mt-0.5">Qabul qilganda to'lash</span>
+                  <span className="text-sm font-bold text-uzum-dark">Naqd / Terminal</span>
+                  <span className="text-xs text-gray-500 mt-0.5">Cash on delivery</span>
                 </button>
               </div>
             </div>
@@ -354,7 +355,7 @@ export const CheckoutPage: React.FC = () => {
           <div className="space-y-6">
             <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-md sticky top-24 space-y-4">
               <h2 className="text-lg font-bold text-uzum-dark pb-3 border-b border-gray-100">
-                Buyurtmangiz ({cartTotalCount} ta)
+                {t('checkout.summary_title')} ({cartTotalCount} ta)
               </h2>
 
               {/* Items Mini List */}
@@ -380,12 +381,12 @@ export const CheckoutPage: React.FC = () => {
                 <div className="flex justify-between text-gray-600">
                   <span>Yetkazib berish ({selectedCity.name}):</span>
                   <span className={deliveryFee === 0 ? 'text-uzum-green font-semibold' : ''}>
-                    {deliveryFee === 0 ? 'Bepul' : `${deliveryFee.toLocaleString('uz-UZ')} so'm`}
+                    {deliveryFee === 0 ? t('cart.delivery_free') : `${deliveryFee.toLocaleString('uz-UZ')} so'm`}
                   </span>
                 </div>
 
                 <div className="flex justify-between text-lg font-extrabold text-uzum-dark pt-3 border-t border-dashed border-gray-300">
-                  <span>Jami to'lov:</span>
+                  <span>{t('cart.total')}</span>
                   <span className="text-uzum-purple">{finalPayableTotal.toLocaleString('uz-UZ')} so'm</span>
                 </div>
               </div>
@@ -394,7 +395,7 @@ export const CheckoutPage: React.FC = () => {
                 type="submit"
                 className="w-full bg-uzum-purple text-white py-4 rounded-xl font-bold text-base hover:bg-uzum-purple-hover transition-all shadow-lg shadow-uzum-purple/20 hover:-translate-y-0.5"
               >
-                Buyurtmani tasdiqlash
+                {t('checkout.confirm_btn')}
               </button>
             </div>
           </div>

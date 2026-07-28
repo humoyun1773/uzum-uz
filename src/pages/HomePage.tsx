@@ -11,7 +11,8 @@ export const HomePage: React.FC = () => {
     selectedCategory,
     setSelectedCategory,
     searchQuery,
-    setSearchQuery
+    setSearchQuery,
+    t
   } = useShop();
 
   // Filtering logic
@@ -55,19 +56,19 @@ export const HomePage: React.FC = () => {
             {selectedCategory === 'hot' ? (
               <>
                 <Flame size={24} className="text-uzum-red shrink-0" />
-                <h2 className="text-xl md:text-2xl font-extrabold text-uzum-dark">Hafta aksiyalari va katta chegirmalar</h2>
+                <h2 className="text-xl md:text-2xl font-extrabold text-uzum-dark">{t('section.hot_deals')}</h2>
               </>
             ) : isFiltered ? (
               <>
                 <Filter size={24} className="text-uzum-purple shrink-0" />
                 <h2 className="text-xl md:text-2xl font-extrabold text-uzum-dark">
-                  {selectedCategory ? `${selectedCategory}` : 'Qidiruv natijalari'}: {displayedProducts.length} ta tovar
+                  {selectedCategory ? `${selectedCategory}` : t('section.search_results')}: {displayedProducts.length} ta tovar
                 </h2>
               </>
             ) : (
               <>
                 <Sparkles size={24} className="text-uzum-purple shrink-0" />
-                <h2 className="text-xl md:text-2xl font-extrabold text-uzum-dark">Mashhur tovarlar va tavsiyalar</h2>
+                <h2 className="text-xl md:text-2xl font-extrabold text-uzum-dark">{t('section.popular')}</h2>
               </>
             )}
           </div>
@@ -78,7 +79,7 @@ export const HomePage: React.FC = () => {
               onClick={handleResetFilters}
             >
               <RefreshCcw size={16} />
-              <span>Filtrlarni tozalash</span>
+              <span>{t('section.reset_filters')}</span>
             </button>
           )}
         </div>
@@ -92,13 +93,13 @@ export const HomePage: React.FC = () => {
           </div>
         ) : (
           <div className="text-center py-16 px-5 bg-white rounded-xl border border-gray-200 animate-fade">
-            <h3 className="text-xl font-bold text-uzum-dark mb-2">Siz izlagan mahsulot topilmadi</h3>
-            <p className="text-sm text-gray-500 mb-4">Iltimos, boshqa kalit so'zlarni kiriting yoki filtrni tozalang</p>
+            <h3 className="text-xl font-bold text-uzum-dark mb-2">{t('section.no_results')}</h3>
+            <p className="text-sm text-gray-500 mb-4">{t('section.no_results_sub')}</p>
             <button 
               className="inline-flex items-center gap-1.5 bg-uzum-purple text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-uzum-purple-hover transition-colors"
               onClick={handleResetFilters}
             >
-              Barcha mahsulotlarni ko'rish
+              {t('section.reset_filters')}
             </button>
           </div>
         )}

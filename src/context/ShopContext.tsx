@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { Product, CartItem, City, User } from '../types';
 import { CITIES, PRODUCTS } from '../data/mockData';
+import { TRANSLATIONS } from '../i18n/translations';
+import type { Language } from '../i18n/translations';
 
 export type ViewType = 'home' | 'wishlist' | 'checkout';
 
@@ -12,6 +14,7 @@ interface ShopContextType {
   searchQuery: string;
   selectedCategory: string | null;
   currentView: ViewType;
+  language: Language;
   
   // Modals & Panels
   isCatalogOpen: boolean;
@@ -28,7 +31,9 @@ interface ShopContextType {
   promoDiscount: number;
   promoError: string;
 
-  // Actions
+  // Actions & Translations
+  t: (key: string) => string;
+  setLanguage: (lang: Language) => void;
   addToCart: (product: Product, selectedColor?: string, selectedSize?: string, selectedStorage?: string) => void;
   removeFromCart: (productId: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
@@ -74,6 +79,10 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentView, setCurrentView] = useState<ViewType>('home');
+  const [language, setLanguageState] = useState<Language>(() => {
+    const saved = localStorage.getItem('uzum_lang');
+    return (saved as Language) || 'uz';
+  });
 
   // Modals state
   const [isCatalogOpen, setIsCatalogOpen] = useState<boolean>(false);
@@ -102,12 +111,24 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [wishlist]);
 
   useEffect(() => {
+    localStorage.setItem('uzum_lang', language);
+  }, [language]);
+
+  useEffect(() => {
     if (user) {
       localStorage.setItem('uzum_user', JSON.stringify(user));
     } else {
       localStorage.removeItem('uzum_user');
     }
   }, [user]);
+
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+  };
+
+  const t = (key: string): string => {
+    return TRANSLATIONS[language]?.[key] || TRANSLATIONS['uz']?.[key] || key;
+  };
 
   const addToCart = (product: Product, selectedColor?: string, selectedSize?: string, selectedStorage?: string) => {
     setCart((prevCart) => {
@@ -187,7 +208,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setPromoError('');
       return true;
     } else {
-      setPromoError("Noto'g'ri promokod. 'UZUM2026' kodini sinab ko'ring!");
+      setPromoError(language === 'ru' ? "Неверный промокод. Попробуйте 'UZUM2026'!" : language === 'en' ? "Invalid promo code. Try 'UZUM2026'!" : "Noto'g'ri promokod. 'UZUM2026' kodini sinab ko'ring!");
       return false;
     }
   };
@@ -216,6 +237,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
         searchQuery,
         selectedCategory,
         currentView,
+        language,
         isCatalogOpen,
         isCartOpen,
         isAuthOpen,
@@ -226,6 +248,8 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
         promoDiscount,
         promoError,
 
+        t,
+        setLanguage,
         addToCart,
         removeFromCart,
         updateQuantity,

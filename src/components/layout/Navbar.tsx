@@ -18,7 +18,8 @@ export const Navbar: React.FC = () => {
     setSelectedProduct,
     setSelectedCategory,
     setCurrentView,
-    currentView
+    currentView,
+    t
   } = useShop();
 
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -82,7 +83,7 @@ export const Navbar: React.FC = () => {
           onClick={() => setIsCatalogOpen(prev => !prev)}
         >
           {isCatalogOpen ? <X size={20} /> : <LayoutGrid size={20} />}
-          <span className="hidden sm:inline">Katalog</span>
+          <span className="hidden sm:inline">{t('navbar.catalog')}</span>
         </button>
 
         {/* Search Bar */}
@@ -92,7 +93,7 @@ export const Navbar: React.FC = () => {
           }`}>
             <input
               type="text"
-              placeholder="Mahsulotlar va turkumlar bo'yicha qidiruv..."
+              placeholder={t('navbar.search_placeholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setIsSearchFocused(true)}
@@ -118,7 +119,7 @@ export const Navbar: React.FC = () => {
           {isSearchFocused && filteredSuggestions.length > 0 && (
             <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-200 z-50 overflow-hidden animate-fade">
               <div className="px-4 py-2 text-[11px] font-semibold text-gray-400 uppercase tracking-wider bg-gray-50 border-b border-gray-100">
-                Taklif etilgan mahsulotlar:
+                {t('navbar.suggestions_title')}
               </div>
               {filteredSuggestions.map((prod) => (
                 <div
@@ -146,7 +147,7 @@ export const Navbar: React.FC = () => {
           >
             <User size={22} />
             <span className="text-xs font-medium hidden sm:inline">
-              {user ? user.name : 'Kirish'}
+              {user ? user.name : t('navbar.login')}
             </span>
           </button>
 
@@ -165,7 +166,7 @@ export const Navbar: React.FC = () => {
                 </span>
               )}
             </div>
-            <span className="text-xs font-medium hidden sm:inline">Saralanganlar</span>
+            <span className="text-xs font-medium hidden sm:inline">{t('navbar.wishlist')}</span>
           </button>
 
           {/* Cart Opener */}
@@ -184,7 +185,7 @@ export const Navbar: React.FC = () => {
             <span className="text-xs font-medium hidden sm:inline">
               {cartDiscountedTotal > 0
                 ? `${cartDiscountedTotal.toLocaleString('uz-UZ')} so'm`
-                : 'Savat'}
+                : t('navbar.cart')}
             </span>
           </button>
         </div>

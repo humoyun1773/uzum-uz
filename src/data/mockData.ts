@@ -113,8 +113,7 @@ export const PRODUCTS: Product[] = [
     image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&q=80',
     gallery: [
       'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800&q=80',
-      'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80',
-      'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800&q=80'
+      'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80'
     ],
     badge: 'Top sotuv',
     isGuaranteed: true,
@@ -124,9 +123,7 @@ export const PRODUCTS: Product[] = [
       'Protsessor': 'Apple A17 Pro (3nm)',
       'Xotira': '128 GB',
       'Operativ xotira': '8 GB',
-      'Kamera': '48 MP + 12 MP + 12 MP',
-      'Batareya': '3274 mAh',
-      'Kafolat': '1 yil rasmiy kafolat'
+      'Kamera': '48 MP + 12 MP + 12 MP'
     },
     variants: {
       colors: ['Natural Titanium', 'Blue Titanium', 'Black Titanium'],
@@ -147,18 +144,15 @@ export const PRODUCTS: Product[] = [
     monthlyPayment: 285000,
     image: 'https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=600&q=80',
     gallery: [
-      'https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=800&q=80',
-      'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&q=80'
+      'https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=800&q=80'
     ],
     badge: 'Aksiya',
     isGuaranteed: true,
-    description: 'Faol shovqinni bekor qilish (ANC) va shaffoflik rejimi bilan yangilangan Apple AirPods Pro 2. USB-C korpusi va 30 soatgacha batareya quvvati.',
+    description: 'Faol shovqinni bekor qilish (ANC) va shaffoflik rejimi bilan yangilangan Apple AirPods Pro 2.',
     specifications: {
       'Turi': 'Simsiz TWS quloqchin',
       'Shovqinni bekor qilish': 'Faol ANC',
-      'Batareya vaqti': '6 soat (keys bilan 30 soat)',
-      'Ulanish': 'Bluetooth 5.3',
-      'Suvdan himoya': 'IP54'
+      'Batareya vaqti': '30 soat'
     },
     inStock: true,
     seller: 'Apple Store Uz'
@@ -179,16 +173,15 @@ export const PRODUCTS: Product[] = [
     ],
     badge: 'Top sotuv',
     isGuaranteed: true,
-    description: "Galaxy AI sun'iy intellekt funksiyalari va 200 MP kameraga ega flagman Samsung Galaxy S24 Ultra. S Pen stilus va Snapdragon 8 Gen 3 protsessori.",
+    description: "Galaxy AI sun'iy intellekt funksiyalari va 200 MP kameraga ega flagman Samsung Galaxy S24 Ultra.",
     specifications: {
       'Ekran': '6.8" Dynamic AMOLED 2X 120Hz',
-      'Protsessor': 'Snapdragon 8 Gen 3 for Galaxy',
+      'Protsessor': 'Snapdragon 8 Gen 3',
       'Xotira': '256 GB',
-      'RAM': '12 GB',
-      'Kamera': '200 MP + 50 MP + 12 MP + 10 MP'
+      'RAM': '12 GB'
     },
     variants: {
-      colors: ['Titanium Gray', 'Titanium Black', 'Titanium Violet'],
+      colors: ['Titanium Gray', 'Titanium Black'],
       storage: ['256GB', '512GB']
     },
     inStock: true,
@@ -213,9 +206,8 @@ export const PRODUCTS: Product[] = [
     description: 'Juda yupqa va yengil Apple M2 chipli MacBook Air. 18 soatgacha zaryadsiz ishlash va Liquid Retina ekrani.',
     specifications: {
       'Ekran': '13.6" Liquid Retina',
-      'Protsessor': 'Apple M2 (8-core CPU, 8-core GPU)',
-      'Xotira': '256 GB SSD',
-      'RAM': '8 GB'
+      'Protsessor': 'Apple M2 (8-core)',
+      'Xotira': '256 GB SSD'
     },
     inStock: true,
     seller: 'Uzum Market Official'
@@ -238,10 +230,8 @@ export const PRODUCTS: Product[] = [
     isGuaranteed: true,
     description: "NanoCell texnologiyasiga ega, HDR10 Pro va webOS smart tizimi bilan ishlaydigan katta 55 dyuymli LG 4K televizori.",
     specifications: {
-      'Ekran diametri': '55 dyuym (139 sm)',
-      'Ruxsatnomasi': '4K UHD (3840x2160)',
-      'Smart TV': 'webOS 23',
-      'Ovoz kuchi': '20 Vt'
+      'Ekran': '55 dyuym 4K UHD',
+      'Smart TV': 'webOS 23'
     },
     inStock: true,
     seller: 'LG Home Uzbekistan'
@@ -262,12 +252,10 @@ export const PRODUCTS: Product[] = [
     ],
     badge: 'Top sotuv',
     isGuaranteed: true,
-    description: "Inverter Direct Drive to'g'ridan-to'g'ri uzatmali motor, bug'da yuvish funksiyasi va tejamkor texnologiya.",
+    description: "Inverter Direct Drive motorli, bug'da yuvish funksiyasi va tejamkor texnologiya.",
     specifications: {
       'Hajmi': '7 kg',
-      'Motor turi': 'Inverter Direct Drive',
-      'Siqish tezligi': '1200 aylanma/daq',
-      'Energiya sinfi': 'A+++'
+      'Siqish tezligi': '1200 aylanma/daq'
     },
     inStock: true,
     seller: 'Techno Store'
@@ -288,11 +276,10 @@ export const PRODUCTS: Product[] = [
     ],
     badge: 'Aksiya',
     isGuaranteed: false,
-    description: "Maksimal qulaylik va amortizatsiyaga ega afsonaviy Nike Air Max 270 krossovkasi. Har kungi va sport mashg'ulotlari uchun ideal.",
+    description: "Maksimal qulaylik va amortizatsiyaga ega afsonaviy Nike Air Max 270 krossovkasi.",
     specifications: {
       'Material': "To'qimachilik / Mesh",
-      'Poshna turi': "Air Max havo yostig'i",
-      'Mavsum': 'Bahor / Yoz / Kuz'
+      'Mavsum': 'Bahor / Yoz'
     },
     variants: {
       sizes: ['40', '41', '42', '43', '44']
@@ -316,11 +303,10 @@ export const PRODUCTS: Product[] = [
     ],
     badge: 'Top sotuv',
     isGuaranteed: true,
-    description: "Frantsiya lavandasi va Marokash apelsin gulining maftunkor uyg'unligi bilan mashhur bo'lgan hashamatli Libre atr-upuri.",
+    description: "Frantsiya lavandasi va Marokash apelsin gulining maftunkor uyg'unligi bilan mashhur Libre atr-upuri.",
     specifications: {
       'Hajmi': '50 ml',
-      'Xushbo\'ylik guruhi': 'Gulli / Sharqona',
-      'Ishlab chiqarilgan mamlakat': 'Fransiya'
+      'Ishlab chiqaruvchi': 'Fransiya'
     },
     inStock: true,
     seller: 'Beauty World'
@@ -344,8 +330,7 @@ export const PRODUCTS: Product[] = [
     description: 'LED yoritgichli, issiqqa chidamli shishadan tayyorlangan 2200W quvvatga ega elektr choynak Tefal.',
     specifications: {
       'Hajmi': '1.7 litr',
-      'Quvvati': '2200 Vt',
-      'Korpus materiali': "Mustahkamlangan shisha / Zanglamas po'lat"
+      'Quvvati': '2200 Vt'
     },
     inStock: true,
     seller: 'Tefal Official'
@@ -369,10 +354,156 @@ export const PRODUCTS: Product[] = [
     description: 'Espresso, Kapuchino va Latte kofelarini bir tugma bilan tayyorlaydigan avtomat DeLonghi kofe mashinasi.',
     specifications: {
       'Bosim': '15 bar',
-      'Kofe doni hajmi': '250 g',
       'Suv baki': '1.8 litr'
     },
     inStock: true,
     seller: 'DeLonghi Store'
+  },
+  {
+    id: 111,
+    title: 'Aqlli soat Apple Watch Series 9 GPS 45mm Starlight',
+    category: 'Elektronika',
+    subCategory: 'Aqlli soatlar',
+    price: 5400000,
+    oldPrice: 6200000,
+    rating: 4.9,
+    reviewsCount: 310,
+    monthlyPayment: 540000,
+    image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=800&q=80'
+    ],
+    badge: 'Top sotuv',
+    isGuaranteed: true,
+    description: 'Double Tap imo-ishoralarini qo\'llab-quvvatlovchi, super yorqin ekranga ega Apple Watch Series 9.',
+    specifications: {
+      'Korpus o\'lchami': '45 mm',
+      'Ekran': 'Always-On Retina'
+    },
+    inStock: true,
+    seller: 'Apple Store Uz'
+  },
+  {
+    id: 112,
+    title: 'Simsiz dinamik JBL Charge 5 Waterproof Portable Speaker',
+    category: 'Elektronika',
+    subCategory: 'Quloqchinlar',
+    price: 1850000,
+    oldPrice: 2200000,
+    rating: 4.8,
+    reviewsCount: 480,
+    monthlyPayment: 185000,
+    image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800&q=80'
+    ],
+    badge: 'Aksiya',
+    isGuaranteed: true,
+    description: 'Kuchli bas va 20 soatgacha batareya quvvatiga ega IP67 suvo\'tkazmaydigan simsiz dinamik JBL.',
+    specifications: {
+      'Quvvati': '40 Vt RMS',
+      'Batareya vaqti': '20 soat'
+    },
+    inStock: true,
+    seller: 'JBL Uzbekistan'
+  },
+  {
+    id: 113,
+    title: 'Erkaklar teri kurtkasi Classic Leather Jacket Black',
+    category: 'Kiyim-kechak',
+    subCategory: 'Kurtkalar',
+    price: 1200000,
+    oldPrice: 1550000,
+    rating: 4.7,
+    reviewsCount: 160,
+    monthlyPayment: 120000,
+    image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&q=80'
+    ],
+    badge: 'Katta sotuv',
+    isGuaranteed: false,
+    description: 'Tabiiy charmdan tayyorlangan, klassik biqim va mustahkam molniyali uslubdagi erkaklar kurtkasi.',
+    specifications: {
+      'Material': '100% Tabiiy charm',
+      'Mavsum': 'Kuz / Bahor'
+    },
+    variants: {
+      sizes: ['S', 'M', 'L', 'XL']
+    },
+    inStock: true,
+    seller: 'Fashion Leather'
+  },
+  {
+    id: 114,
+    title: 'Ayollar sumkasi Michael Kors Jet Set Travel Crossbody',
+    category: 'Aksessuarlar',
+    subCategory: 'Sumkalar',
+    price: 1950000,
+    oldPrice: 2400000,
+    rating: 4.9,
+    reviewsCount: 290,
+    monthlyPayment: 195000,
+    image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&q=80'
+    ],
+    badge: 'Top sotuv',
+    isGuaranteed: true,
+    description: 'Zamonaviy va sig\'imli Michael Kors tabiiy teri sumkasi oltin rang metall furnitura bilan.',
+    specifications: {
+      'Brend': 'Michael Kors',
+      'Material': 'Tabiiy teri'
+    },
+    inStock: true,
+    seller: 'Luxury Brand Store'
+  },
+  {
+    id: 115,
+    title: 'Konditsioner Midea Inverter Split System 12000 BTU',
+    category: 'Maishiy texnika',
+    subCategory: 'Konditsionerlar',
+    price: 4800000,
+    oldPrice: 5600000,
+    rating: 4.8,
+    reviewsCount: 340,
+    monthlyPayment: 480000,
+    image: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&q=80'
+    ],
+    badge: 'Aksiya',
+    isGuaranteed: true,
+    description: '35 kv.m gacha bo\'lgan xonalarni tejamkor sovutuvchi va isituvchi Inverter Midea split tizimi.',
+    specifications: {
+      'Quvvati': '12000 BTU',
+      'Maydon': '35 kv.m gacha'
+    },
+    inStock: true,
+    seller: 'Midea Climate'
+  },
+  {
+    id: 116,
+    title: 'Sport velosipedi Shimano 21-speed Aluminium 29" Wheels',
+    category: 'Sport va hordiq',
+    subCategory: 'Velosipedlar',
+    price: 2450000,
+    oldPrice: 2900000,
+    rating: 4.7,
+    reviewsCount: 175,
+    monthlyPayment: 245000,
+    image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=600&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=800&q=80'
+    ],
+    badge: 'Yangi',
+    isGuaranteed: true,
+    description: 'Mustahkam alyuminiy karkasli va Shimano 21 tezlikli uzatmalar qutisiga ega tog\' velosipedi.',
+    specifications: {
+      'G\'ildirak diametri': '29 dyuym',
+      'Tezliklar soni': '21 tezlik'
+    },
+    inStock: true,
+    seller: 'Bicycle Pro'
   }
 ];

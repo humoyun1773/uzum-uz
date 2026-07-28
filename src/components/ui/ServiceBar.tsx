@@ -1,7 +1,10 @@
 import React from 'react';
+import { useShop } from '../../context/ShopContext';
 import { Truck, CreditCard, ShieldCheck, RefreshCw } from 'lucide-react';
 
 export const ServiceBar: React.FC = () => {
+  const { t } = useShop();
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-white border border-gray-200 rounded-xl p-5 mb-8 shadow-xs">
       <div className="flex items-center gap-3.5">
@@ -9,8 +12,8 @@ export const ServiceBar: React.FC = () => {
           <Truck size={22} />
         </div>
         <div className="flex flex-col">
-          <strong className="text-sm font-bold text-uzum-dark">1 kunda yetkazish</strong>
-          <span className="text-xs text-gray-500">Respublika bo'ylab bepul</span>
+          <strong className="text-sm font-bold text-uzum-dark">{t('service.delivery_title')}</strong>
+          <span className="text-xs text-gray-500">{t('service.delivery_sub')}</span>
         </div>
       </div>
 
@@ -19,8 +22,8 @@ export const ServiceBar: React.FC = () => {
           <CreditCard size={22} />
         </div>
         <div className="flex flex-col">
-          <strong className="text-sm font-bold text-uzum-dark">Uzum Nasiya 0-0-12</strong>
-          <span className="text-xs text-gray-500">Boshlang'ich to'lovsiz</span>
+          <strong className="text-sm font-bold text-uzum-dark">{t('service.nasiya_title')}</strong>
+          <span className="text-xs text-gray-500">{t('service.nasiya_sub')}</span>
         </div>
       </div>
 
@@ -29,8 +32,8 @@ export const ServiceBar: React.FC = () => {
           <ShieldCheck size={22} />
         </div>
         <div className="flex flex-col">
-          <strong className="text-sm font-bold text-uzum-dark">100% Sifat kafolati</strong>
-          <span className="text-xs text-gray-500">Original tovarlar</span>
+          <strong className="text-sm font-bold text-uzum-dark">{t('service.quality_title')}</strong>
+          <span className="text-xs text-gray-500">{t('service.quality_sub')}</span>
         </div>
       </div>
 
@@ -39,8 +42,8 @@ export const ServiceBar: React.FC = () => {
           <RefreshCw size={22} />
         </div>
         <div className="flex flex-col">
-          <strong className="text-sm font-bold text-uzum-dark">Oson qaytarish</strong>
-          <span className="text-xs text-gray-500">10 kun ichida almashtirish</span>
+          <strong className="text-sm font-bold text-uzum-dark">{t('service.return_title')}</strong>
+          <span className="text-xs text-gray-500">{t('service.return_sub')}</span>
         </div>
       </div>
     </div>

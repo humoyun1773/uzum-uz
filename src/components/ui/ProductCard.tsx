@@ -14,7 +14,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     updateQuantity,
     toggleWishlist,
     isWishlisted,
-    setSelectedProduct
+    setSelectedProduct,
+    t
   } = useShop();
 
   const isFavorite = isWishlisted(product.id);
@@ -67,7 +68,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {product.isGuaranteed && (
           <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-white text-[10px] font-medium px-1.5 py-0.5 rounded flex items-center gap-1">
             <ShieldCheck size={12} />
-            <span>Kafolat</span>
+            <span>{t('product.guarantee')}</span>
           </div>
         )}
       </div>
@@ -87,13 +88,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <div className="flex items-center gap-1 text-xs mb-2">
             <Star size={14} className="text-uzum-yellow fill-uzum-yellow" />
             <span className="font-semibold text-gray-700">{product.rating}</span>
-            <span className="text-gray-400">({product.reviewsCount} sharh)</span>
+            <span className="text-gray-400">({product.reviewsCount} {t('product.reviews')})</span>
           </div>
 
           {/* Nasiya Tag */}
           <div className="mb-2.5">
             <span className="bg-uzum-yellow text-uzum-dark text-[11px] font-bold px-1.5 py-0.5 rounded">
-              {product.monthlyPayment.toLocaleString('uz-UZ')} so'm/oy
+              {product.monthlyPayment.toLocaleString('uz-UZ')} {t('product.monthly')}
             </span>
           </div>
         </div>

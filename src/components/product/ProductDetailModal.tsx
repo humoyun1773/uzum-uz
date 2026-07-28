@@ -10,7 +10,8 @@ export const ProductDetailModal: React.FC = () => {
     toggleWishlist,
     isWishlisted,
     setIsCartOpen,
-    selectedCity
+    selectedCity,
+    t
   } = useShop();
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -93,17 +94,17 @@ export const ProductDetailModal: React.FC = () => {
 
           {/* Info Column */}
           <div className="flex flex-col gap-4">
-            <span className="text-xs text-gray-500">Sotuvchi: <strong className="text-gray-800">{selectedProduct.seller}</strong></span>
+            <span className="text-xs text-gray-500">{t('product.seller')} <strong className="text-gray-800">{selectedProduct.seller}</strong></span>
             <h1 className="text-xl md:text-2xl font-bold text-uzum-dark leading-snug">{selectedProduct.title}</h1>
 
             <div className="flex items-center justify-between border-b border-gray-100 pb-3">
               <div className="flex items-center gap-1.5 text-sm">
                 <Star size={16} className="text-uzum-yellow fill-uzum-yellow" />
                 <span className="font-bold">{selectedProduct.rating}</span>
-                <span className="text-gray-400">({selectedProduct.reviewsCount} ta sharh)</span>
+                <span className="text-gray-400">({selectedProduct.reviewsCount} {t('product.reviews')})</span>
               </div>
               <span className="text-xs font-semibold text-uzum-green bg-emerald-50 px-2.5 py-1 rounded-md">
-                Omborda mavjud
+                {t('product.in_stock')}
               </span>
             </div>
 
@@ -111,20 +112,20 @@ export const ProductDetailModal: React.FC = () => {
             <div className="bg-amber-50/70 border border-amber-200 rounded-xl p-4">
               <div className="flex items-center gap-2 text-sm font-bold text-amber-800 mb-3">
                 <CreditCard size={18} />
-                <span>Uzum Nasiya bilan bo'lib to'lash</span>
+                <span>{t('product.nasiya_heading')}</span>
               </div>
               <div className="grid grid-cols-3 gap-2">
                 <div className="bg-white border border-amber-200 rounded-lg p-2 text-center">
                   <span className="text-[11px] font-semibold text-gray-500 block">3 oy</span>
-                  <span className="text-xs font-bold text-uzum-purple">{Math.round(selectedProduct.price / 3).toLocaleString('uz-UZ')} so'm/oy</span>
+                  <span className="text-xs font-bold text-uzum-purple">{Math.round(selectedProduct.price / 3).toLocaleString('uz-UZ')} {t('product.monthly')}</span>
                 </div>
                 <div className="bg-white border border-amber-200 rounded-lg p-2 text-center">
                   <span className="text-[11px] font-semibold text-gray-500 block">6 oy</span>
-                  <span className="text-xs font-bold text-uzum-purple">{Math.round(selectedProduct.price / 6).toLocaleString('uz-UZ')} so'm/oy</span>
+                  <span className="text-xs font-bold text-uzum-purple">{Math.round(selectedProduct.price / 6).toLocaleString('uz-UZ')} {t('product.monthly')}</span>
                 </div>
                 <div className="bg-uzum-purple-light border border-uzum-purple rounded-lg p-2 text-center">
                   <span className="text-[11px] font-semibold text-gray-500 block">12 oy</span>
-                  <span className="text-xs font-bold text-uzum-purple">{selectedProduct.monthlyPayment.toLocaleString('uz-UZ')} so'm/oy</span>
+                  <span className="text-xs font-bold text-uzum-purple">{selectedProduct.monthlyPayment.toLocaleString('uz-UZ')} {t('product.monthly')}</span>
                 </div>
               </div>
             </div>
@@ -132,7 +133,7 @@ export const ProductDetailModal: React.FC = () => {
             {/* Color Variants */}
             {selectedProduct.variants?.colors && (
               <div className="flex flex-col gap-1.5">
-                <span className="text-xs text-gray-600">Rang: <strong className="text-gray-900">{selectedColor}</strong></span>
+                <span className="text-xs text-gray-600">{t('product.color')} <strong className="text-gray-900">{selectedColor}</strong></span>
                 <div className="flex flex-wrap gap-2">
                   {selectedProduct.variants.colors.map((color) => (
                     <button
@@ -154,7 +155,7 @@ export const ProductDetailModal: React.FC = () => {
             {/* Storage Variants */}
             {selectedProduct.variants?.storage && (
               <div className="flex flex-col gap-1.5">
-                <span className="text-xs text-gray-600">Xotira hajmi: <strong className="text-gray-900">{selectedStorage}</strong></span>
+                <span className="text-xs text-gray-600">{t('product.storage')} <strong className="text-gray-900">{selectedStorage}</strong></span>
                 <div className="flex flex-wrap gap-2">
                   {selectedProduct.variants.storage.map((st) => (
                     <button
@@ -176,7 +177,7 @@ export const ProductDetailModal: React.FC = () => {
             {/* Size Variants */}
             {selectedProduct.variants?.sizes && (
               <div className="flex flex-col gap-1.5">
-                <span className="text-xs text-gray-600">O'lcham: <strong className="text-gray-900">{selectedSize}</strong></span>
+                <span className="text-xs text-gray-600">{t('product.size')} <strong className="text-gray-900">{selectedSize}</strong></span>
                 <div className="flex flex-wrap gap-2">
                   {selectedProduct.variants.sizes.map((sz) => (
                     <button
@@ -199,11 +200,11 @@ export const ProductDetailModal: React.FC = () => {
             <div className="bg-gray-50 rounded-xl p-3 flex flex-col gap-2 text-xs text-gray-600">
               <div className="flex items-center gap-2.5">
                 <Truck size={18} className="text-uzum-purple shrink-0" />
-                <div><strong>Yetkazib berish ({selectedCity.name}):</strong> {selectedCity.deliveryDays} bepul topshirish punktiga</div>
+                <div><strong>{t('product.delivery_info')} ({selectedCity.name}):</strong> {selectedCity.deliveryDays} {t('product.delivery_sub')}</div>
               </div>
               <div className="flex items-center gap-2.5">
                 <ShieldCheck size={18} className="text-uzum-purple shrink-0" />
-                <div><strong>Kafolat:</strong> 10 kun ichida qaytarish va almashtirish kafolati</div>
+                <div><strong>{t('product.guarantee')}:</strong> 10 kun ichida qaytarish va almashtirish kafolati</div>
               </div>
             </div>
 
@@ -228,12 +229,12 @@ export const ProductDetailModal: React.FC = () => {
                   {isAddedSuccess ? (
                     <>
                       <CheckCircle2 size={18} />
-                      Savatga qo'shildi!
+                      {t('product.added_cart')}
                     </>
                   ) : (
                     <>
                       <ShoppingBag size={18} />
-                      Savatga qo'shish
+                      {t('product.add_cart')}
                     </>
                   )}
                 </button>
@@ -242,7 +243,7 @@ export const ProductDetailModal: React.FC = () => {
                   className="py-3.5 px-4 rounded-lg font-bold text-sm bg-uzum-yellow text-uzum-dark hover:bg-uzum-yellow-hover transition-colors"
                   onClick={handleBuyNow}
                 >
-                  Bir klikda xarid qilish
+                  {t('product.buy_now')}
                 </button>
               </div>
             </div>
@@ -256,7 +257,7 @@ export const ProductDetailModal: React.FC = () => {
                   }`}
                   onClick={() => setActiveTab('desc')}
                 >
-                  Tavsif
+                  {t('product.tab_desc')}
                 </button>
                 <button
                   className={`pb-2 text-sm font-semibold border-b-2 transition-colors -mb-px ${
@@ -264,7 +265,7 @@ export const ProductDetailModal: React.FC = () => {
                   }`}
                   onClick={() => setActiveTab('specs')}
                 >
-                  Xususiyatlari
+                  {t('product.tab_specs')}
                 </button>
               </div>
 
