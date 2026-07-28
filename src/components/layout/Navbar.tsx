@@ -57,7 +57,7 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50 py-2.5 shadow-xs">
+    <header className="bg-white border-b border-gray-200 sticky top-0 z-30 py-2.5 shadow-xs">
       <div className="max-w-[1280px] mx-auto px-4 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 md:gap-6">
         
         {/* LEFT: Logo & Catalog Button */}
